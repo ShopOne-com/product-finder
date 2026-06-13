@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Affiliate Store | Product Finder</title>
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* 🌙 Dark Mode CSS Variables */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --text-muted: #666;
+            --border-light: #e1e8ed;
+            --card-bg: #ffffff;
+            --code-gradient-start: #007bff;
+            --code-gradient-end: #00b4d8;
+            --refresh-bg: rgba(0,0,0,0.03);
+            --refresh-hover-bg: rgba(0,123,255,0.1);
+            --footer-bg: #f8f9fa;
+            --trending-bg: #ffffff;
+            --trending-border: #e1e8ed;
+            --social-icon-color: #5a6e8a;
+        }
+        body.dark {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --text-primary: #eee;
+            --text-secondary: #ccc;
+            --text-muted: #aaa;
+            --border-light: #2c3e50;
+            --card-bg: #0f3460;
+            --code-gradient-start: #4cc9f0;
+            --code-gradient-end: #f72585;
+            --refresh-bg: rgba(255,255,255,0.05);
+            --refresh-hover-bg: rgba(76,201,240,0.2);
+            --footer-bg: #0f3460;
+            --trending-bg: #0f3460;
+            --trending-border: #2c3e50;
+            --social-icon-color: #ccc;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg-primary); 
+            color: var(--text-primary); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .main-content { flex: 1; }
+        
+        .hero-section { 
+            background: var(--bg-secondary); 
+            padding: 60px 20px; 
+            text-align: center; 
+            position: relative; 
+            width: 100%;
+            transition: background 0.3s;
+        }
+        
+        .top-icons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+        }
+        .refresh-icon, .dark-toggle {
+            font-size: 20px;
+            cursor: pointer;
+            color: #5a6e8a;
+            transition: all 0.3s ease;
+            background: var(--refresh-bg);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .refresh-icon:hover, .dark-toggle:hover {
+            color: #007bff;
+            background: var(--refresh-hover-bg);
+        }
+        .refresh-icon:hover { transform: rotate(180deg); }
+        body.dark .dark-toggle i { transform: rotate(360deg); }
+        
+        .hero-section h2 { font-size: 32px; font-weight: 800; margin-bottom: 5px; color: var(--text-primary); }
+        .amazon-credit { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 25px; display: block; }
+        .intro-container { margin-bottom: 25px; }
+        .intro-text { color: var(--text-secondary); font-size: 16px; }
+        
+        input[type="text"] { 
+            padding: 14px 20px; width: 90%; max-width: 360px; border: 2px solid var(--border-light); border-radius: 50px;
+            font-size: 16px; outline: none; transition: all 0.3s; text-transform: uppercase; text-align: center;
+            font-weight: 500; background: var(--bg-primary); color: var(--text-primary);
+        }
+        input[type="text"]:focus { border-color: #007bff; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        input[type="text"]::placeholder { text-transform: none; color: var(--text-muted); }
+        
+        .search-btn, .buy-btn {
+            padding: 12px 24px; background: transparent; border: 2px solid #007bff; border-radius: 50px;
+            cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 20px; width: auto;
+            min-width: 200px; max-width: 280px; transition: all 0.25s ease; display: inline-flex;
+            align-items: center; justify-content: center; gap: 10px; color: #007bff; letter-spacing: 0.5px;
+        }
+        .search-btn:hover, .buy-btn:hover { background: rgba(0, 123, 255, 0.08); transform: translateY(-2px);
+            border-color: #0056b3; color: #0056b3; }
+        .search-btn:active, .buy-btn:active { transform: translateY(1px); }
+        
+        .buy-btn { border-color: #28a745; color: #28a745; }
+        .buy-btn:hover { background: rgba(40, 167, 69, 0.08); border-color: #1e7e34; color: #1e7e34; }
+        
+        .buy-btn.loading { pointer-events: none; opacity: 0.7; cursor: wait; }
+        
+        .spinner { display: none; justify-content: center; align-items: center; margin-top: 20px; }
+        .dotted-spinner { width: 24px; height: 24px; border: 2px dotted #007bff; border-radius: 50%; border-top-color: transparent; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .inline-spinner { width: 16px; height: 16px; border: 2px dotted white; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; display: inline-block; }
+        
+        .trending-section { margin-top: 30px; text-align: center; }
+        .trending-label { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .trending-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+        .trending-chip {
+            background: var(--trending-bg);
+            border: 1px solid var(--trending-border);
+            border-radius: 50px;
+            padding: 8px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #007bff;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .trending-chip:hover {
+            background: rgba(0,123,255,0.1);
+            transform: translateY(-2px);
+            border-color: #007bff;
+        }
+        body.dark .trending-chip { background: #0f3460; border-color: #2c3e50; color: #4cc9f0; }
+        body.dark .trending-chip:hover { background: rgba(76,201,240,0.2); border-color: #4cc9f0; }
+        
+        .error { color: #dc3545; font-size: 14px; font-weight: 500; margin-top: 15px; display: none; align-items: center; justify-content: center; gap: 6px; }
+        
+        .product-display-section { display: none; max-width: 600px; margin: 40px auto; padding: 0 20px; text-align: center; animation: fadeIn 0.4s; }
+        .code-display { 
+            font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            display: inline-block; min-height: 42px; background: linear-gradient(135deg, var(--code-gradient-start), var(--code-gradient-end));
+            background-clip: text; -webkit-background-clip: text; color: transparent;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .code-display::after { content: '|'; display: inline-block; margin-left: 2px; color: #007bff; animation: blink 0.7s infinite; }
+        .styled-hr { border: 0; height: 1px; background: var(--border-light); margin: 20px auto; width: 60%; }
+        .product-title { font-size: 16px; font-weight: 600; margin: 15px 0; line-height: 1.5; color: var(--text-primary); }
+        .click-instruction { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .click-instruction i { color: #007bff; }
+        .thanks-msg { display: none; background: #e8f5e9; border: 1px dashed #28a745; padding: 15px; border-radius: 12px; margin-top: 10px; color: #28a745; }
+        body.dark .thanks-msg { background: #1e3a2f; color: #4caf50; border-color: #4caf50; }
+        
+        .footer-section { background: var(--footer-bg); border-top: 1px solid var(--border-light); padding: 35px 20px 20px; text-align: center; transition: 0.3s; }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .social-icons a {
+            color: var(--social-icon-color);
+            font-size: 24px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+        .social-icons a.facebook:hover { color: #1877f2; }
+        .social-icons a.instagram:hover { color: #e4405f; }
+        body.dark .social-icons a.facebook:hover { color: #3b82f6; }
+        body.dark .social-icons a.instagram:hover { color: #f56040; }
+        
+        .about-container { max-width: 500px; margin: 0 auto 25px; }
+        .about-container h3 { font-size: 16px; margin-bottom: 8px; color: var(--text-primary); }
+        .about-container p { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+        .copyright-text { font-size: 10px; color: var(--text-muted); }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        
+        @media (max-width: 480px) {
+            .search-btn, .buy-btn { min-width: 160px; padding: 10px 20px; font-size: 14px; }
+            .code-display { font-size: 20px; letter-spacing: 1px; }
+            .refresh-icon, .dark-toggle { width: 36px; height: 36px; font-size: 18px; }
+            .trending-chip { padding: 6px 14px; font-size: 12px; }
+            .social-icons a { font-size: 20px; }
+            .about-container p { font-size: 10px; }
+            .copyright-text { font-size: 9px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-content">
+    <div class="hero-section">
+        <div class="top-icons">
+            <div id="darkModeToggle" class="dark-toggle" title="Dark/Light Mode">
+                <i class="fa-solid fa-moon"></i>
+            </div>
+            <i id="btnRefresh" class="fa-solid fa-sync-alt refresh-icon" title="Refresh"></i>
+        </div>
+
+        <h2>Product Finder 🛍️</h2>
+        <span class="amazon-credit">Powered by Amazon Affiliate</span>
+        <div class="intro-container">
+            <p class="intro-text">Enter the code from Instagram post & search:</p>
+        </div>
+        <input type="text" id="productCode" placeholder="e.g. BOAT10, SUN20">
+        <br>
+        <button id="btnSearch" class="search-btn">
+            <i class="fa-solid fa-magnifying-glass"></i> Search Product
+        </button>
+        
+        <div class="trending-section">
+            <div class="trending-label">
+                <i class="fa-solid fa-fire-flame-curved"></i> Trending Codes
+                <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+            <div class="trending-chips">
+                <div class="trending-chip" data-code="BOAT10">BOAT10</div>
+                <div class="trending-chip" data-code="SUN20">SUN20</div>
+                <div class="trending-chip" data-code="HEAD30">HEAD30</div>
+                <div class="trending-chip" data-code="MOTO50">MOTO50</div>
+            </div>
+        </div>
+        
+        <div id="loadingSpinner" class="spinner">
+            <div class="dotted-spinner"></div>
+        </div>
+        
+        <p id="errorMessage" class="error">
+            <i class="fa-solid fa-circle-exclamation"></i> <span id="errorText"></span>
+        </p>
+    </div>
+
+    <div id="productDisplay" class="product-display-section">
+        <div id="pCodeDisplay" class="code-display"></div>
+        <hr class="styled-hr">
+        <div id="pTitle" class="product-title"></div>
+        <div id="clickText" class="click-instruction">
+            <i class="fa-solid fa-hand-pointer"></i> Tap the button below to view product
+        </div>
+        <div id="thanksMessage" class="thanks-msg">
+            <i class="fa-solid fa-circle-check"></i> Thank you for your support!
+            <span>Redirecting you to product page...</span>
+        </div>
+        <button id="pLink" class="buy-btn">
+            <i class="fa-solid fa-bag-shopping"></i> View Product
+        </button>
+    </div>
+</div>
+
+<footer class="footer-section">
+    <!-- ✅ Social Links replaced with actual URLs -->
+    <div class="social-icons">
+        <a href="https://www.facebook.com/share/1E598mYhuo/" target="_blank" rel="noopener noreferrer" class="facebook" title="Follow on Facebook">
+            <i class="fa-brands fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/kapil2000_26?igsh=bmVuZ3Bza2VycmJj" target="_blank" rel="noopener noreferrer" class="instagram" title="Follow on Instagram">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </div>
+    
+    <div class="about-container">
+        <h3><i class="fa-solid fa-circle-info"></i> About Product Finder</h3>
+        <p>Enter the unique code shown in Instagram posts/reels to go directly to the real Amazon product page.</p>
+    </div>
+    <p class="copyright-text"><i class="fa-regular fa-copyright"></i> 2026 My Affiliate Store. All Rights Reserved.</p>
+</footer>
+
+<script>
+const productsDatabase = {
+    "BOAT10": { title: "boAt Airdopes 141 Bluetooth TWS Earbuds with 42H Playtime, ENx Tech, Beast Mode", link: "https://amzn.to/3XyzBOAT10" },
+    "SUN20": { title: "Dot & Key Vitamin C + E Super Bright Sunscreen SPF 50 PA+++ | Waterproof & Matte Finish", link: "https://amzn.to/3SUN20Key" },
+    "HEAD30": { title: "boAt Rockerz 255 Pro+ Bluetooth Neckband Earphones with 40H Battery & ASAP Charge", link: "https://amzn.to/3HEAD255" },
+    "MOTO50": { title: "Moto G85 5G (12GB RAM, 256GB) with Vegan Leather Design & 50MP Camera", link: "https://amzn.to/3MotoG85" }
+};
+
+let typewriterTimeout, isDeleting = false, currentCharIndex = 0, finalProductLink = "";
+let redirectTimeout = null;
+
+const darkToggle = document.getElementById('darkModeToggle');
+const icon = darkToggle.querySelector('i');
+darkToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    if (document.body.classList.contains('dark')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    }
+});
+
+document.querySelectorAll('.trending-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+        const code = chip.getAttribute('data-code');
+        document.getElementById('productCode').value = code;
+        searchProduct();
+    });
+});
+
+function stopTypewriter() { if (typewriterTimeout) clearTimeout(typewriterTimeout); isDeleting = false; currentCharIndex = 0; }
+function startInfiniteTypewriter(text) {
+    if (typewriterTimeout) clearTimeout(typewriterTimeout);
+    const el = document.getElementById("pCodeDisplay");
+    if (!el) return;
+    isDeleting = false;
+    currentCharIndex = 0;
+    function animate() {
+        if (!el) return;
+        if (!isDeleting) el.innerText = text.substring(0, ++currentCharIndex);
+        else el.innerText = text.substring(0, --currentCharIndex);
+        let speed = isDeleting ? 60 : 120;
+        if (!isDeleting && currentCharIndex === text.length) { speed = 1800; isDeleting = true; }
+        else if (isDeleting && currentCharIndex === 0) { isDeleting = false; speed = 500; }
+        typewriterTimeout = setTimeout(animate, speed);
+    }
+    animate();
+}
+
+function searchProduct() {
+    const code = document.getElementById("productCode").value.trim().toUpperCase();
+    const errorBox = document.getElementById("errorMessage");
+    const errorText = document.getElementById("errorText");
+    const displayDiv = document.getElementById("productDisplay");
+    const spinner = document.getElementById("loadingSpinner");
+    
+    stopTypewriter();
+    if (redirectTimeout) clearTimeout(redirectTimeout);
+    document.getElementById("thanksMessage").style.display = "none";
+    document.getElementById("clickText").style.display = "flex";
+    document.getElementById("pLink").style.display = "inline-flex";
+    const buyBtn = document.getElementById("pLink");
+    buyBtn.classList.remove("loading");
+    buyBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> View Product';
+    
+    displayDiv.style.display = "none";
+    errorBox.style.display = "none";
+    
+    if (code === "") {
+        errorBox.style.display = "flex";
+        errorText.innerText = "Please enter a product code!";
+        return;
+    }
+    
+    spinner.style.display = "flex";
+    setTimeout(() => {
+        spinner.style.display = "none";
+        if (productsDatabase[code]) {
+            errorBox.style.display = "none";
+            document.getElementById("pTitle").innerText = productsDatabase[code].title;
+            finalProductLink = productsDatabase[code].link;
+            displayDiv.style.display = "block";
+            startInfiniteTypewriter(code);
+        } else {
+            displayDiv.style.display = "none";
+            errorBox.style.display = "flex";
+            errorText.innerText = "Invalid code! Try: BOAT10, SUN20, HEAD30, MOTO50";
+        }
+    }, 500);
+}
+
+function delayRedirect() {
+    if (!finalProductLink) return;
+    const buyBtn = document.getElementById("pLink");
+    const thanksMsgDiv = document.getElementById("thanksMessage");
+    const clickTextDiv = document.getElementById("clickText");
+    buyBtn.classList.add("loading");
+    buyBtn.innerHTML = '<span class="inline-spinner"></span> Redirecting...';
+    clickTextDiv.style.display = "none";
+    thanksMsgDiv.style.display = "block";
+    if (redirectTimeout) clearTimeout(redirectTimeout);
+    redirectTimeout = setTimeout(() => {
+        window.open(finalProductLink, '_blank');
+        buyBtn.classList.remove("loading");
+        buyBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> View Product';
+        thanksMsgDiv.style.display = "none";
+        clickTextDiv.style.display = "flex";
+        redirectTimeout = null;
+    }, 1600);
+}
+
+function refreshPage() {
+    stopTypewriter();
+    if (redirectTimeout) clearTimeout(redirectTimeout);
+    document.getElementById("productCode").value = "";
+    document.getElementById("errorMessage").style.display = "none";
+    document.getElementById("productDisplay").style.display = "none";
+    document.getElementById("thanksMessage").style.display = "none";
+    document.getElementById("clickText").style.display = "flex";
+    const buyBtn = document.getElementById("pLink");
+    buyBtn.classList.remove("loading");
+    buyBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> View Product';
+    document.getElementById("pCodeDisplay").innerText = "";
+    finalProductLink = "";
+    document.getElementById("loadingSpinner").style.display = "none";
+    if (redirectTimeout) clearTimeout(redirectTimeout);
+}
+
+document.getElementById("btnSearch").onclick = searchProduct;
+document.getElementById("pLink").onclick = delayRedirect;
+document.getElementById("btnRefresh").onclick = refreshPage;
+document.getElementById("productCode").addEventListener("keypress", e => { if (e.key === "Enter") searchProduct(); });
+window.onload = () => {
+    document.getElementById("productDisplay").style.display = "none";
+    document.getElementById("loadingSpinner").style.display = "none";
+};
+</script>
+</body>
+</html>
