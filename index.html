@@ -223,7 +223,7 @@
         <div class="intro-container">
             <p class="intro-text">Enter the code from Instagram post & search:</p>
         </div>
-        <input type="text" id="productCode" placeholder="e.g. BOAT10, SUN20">
+        <input type="text" id="productCode" placeholder="e.g. DEAL01, DEAL02">
         <br>
         <button id="btnSearch" class="search-btn">
             <i class="fa-solid fa-magnifying-glass"></i> Search Product
@@ -235,10 +235,10 @@
                 <i class="fa-solid fa-arrow-trend-up"></i>
             </div>
             <div class="trending-chips">
-                <div class="trending-chip" data-code="BOAT10">BOAT10</div>
-                <div class="trending-chip" data-code="SUN20">SUN20</div>
-                <div class="trending-chip" data-code="HEAD30">HEAD30</div>
-                <div class="trending-chip" data-code="MOTO50">MOTO50</div>
+                <div class="trending-chip" data-code="DEAL01">DEAL01</div>
+                <div class="trending-chip" data-code="DEAL02">DEAL02</div>
+                <div class="trending-chip" data-code="DEAL03">DEAL03</div>
+                <div class="trending-chip" data-code="DEAL04">DEAL04</div>
             </div>
         </div>
         
@@ -288,10 +288,10 @@
 
 <script>
 const productsDatabase = {
-    "BOAT10": { title: "boAt Airdopes 141 Bluetooth TWS Earbuds with 42H Playtime, ENx Tech, Beast Mode", link: "https://amzn.to/3XyzBOAT10" },
-    "SUN20": { title: "Dot & Key Vitamin C + E Super Bright Sunscreen SPF 50 PA+++ | Waterproof & Matte Finish", link: "https://amzn.to/3SUN20Key" },
-    "HEAD30": { title: "boAt Rockerz 255 Pro+ Bluetooth Neckband Earphones with 40H Battery & ASAP Charge", link: "https://amzn.to/3HEAD255" },
-    "MOTO50": { title: "Moto G85 5G (12GB RAM, 256GB) with Vegan Leather Design & 50MP Camera", link: "https://amzn.to/3MotoG85" }
+    "DEAL01": { title: "Repechage Vita Cura B3 Elixir Complex Face Cream (50 mL) for Smoother Younger Looking Skin", link: "https://amzn.to/3Qk2gVW" },
+    "DEAL02": { title: "Repechage Vita Cura Renewal Toner Anti-Aging with Salicylic Acid ", link: "https://amzn.to/4erVPbH" },
+    "DEAL03": { title: "Forest Essentials Bestselling Soundarya Radiance Day Cream with 24K Gold & SPF 30 PA++", link: "https://amzn.to/4fP30wV" },
+    "DEAL04": { title: "Ceuticoz Ivorine Daily Moisturizer | For Dullness & Uneven Skin Tone | Brightens, hydrates & protects", link: "https://amzn.to/4fJ9iy3" }
 };
 
 let typewriterTimeout, isDeleting = false, currentCharIndex = 0, finalProductLink = "";
@@ -374,7 +374,7 @@ function searchProduct() {
         } else {
             displayDiv.style.display = "none";
             errorBox.style.display = "flex";
-            errorText.innerText = "Invalid code! Try: BOAT10, SUN20, HEAD30, MOTO50";
+            errorText.innerText = "Invalid code! Try: DEAL01, DEAL02, DEAL03, DEAL04";
         }
     }, 500);
 }
