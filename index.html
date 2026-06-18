@@ -11,82 +11,56 @@
     <style>
         /* ============================================================
                    🎨 CUSTOMIZATION GUIDE - CSS VARIABLES
-                   ============================================================
-                   You can change colors, sizes, shadows, and spacing below.
-                   All values are stored in :root (light mode) and body.dark (dark mode).
                    ============================================================ */
 
-        /* ===== GOOGLE FONTS ===== */
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
         /* ============================================================
-                   🌞 LIGHT MODE VARIABLES (Edit these to change light theme)
+                   🌞 LIGHT MODE VARIABLES
                    ============================================================ */
         :root {
-            /* --- Background Colors --- */
             --bg-primary: #f0f2f8;
             --bg-secondary: #ffffff;
             --bg-hero: #ffffff;
             --bg-card: #ffffff;
-
-            /* --- Text Colors --- */
             --text-primary: #0f0f1a;
             --text-secondary: #3d3d5c;
             --text-muted: #7a7a9a;
-
-            /* --- Border & Shadows --- */
             --border-light: #e4e8f0;
             --shadow-sm: 0 2px 16px rgba(0, 0, 0, 0.04);
             --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.07);
             --shadow-lg: 0 16px 56px rgba(0, 0, 0, 0.10);
-
-            /* --- Border Radius --- */
             --radius-sm: 12px;
             --radius-md: 18px;
             --radius-lg: 28px;
             --radius-full: 9999px;
-
-            /* --- Typewriter Code Colors --- */
             --code-color: #0f0f1a;
             --code-cursor: #7c3aed;
-
-            /* --- Accent / Brand Colors (Primary Purple) --- */
             --accent-primary: #7c3aed;
             --accent-secondary: #a78bfa;
             --accent-gradient: linear-gradient(135deg, #7c3aed, #a78bfa);
             --accent-gradient-hover: linear-gradient(135deg, #6d28d9, #8b5cf6);
-
-            /* --- Success / Error Colors --- */
             --success-color: #10b981;
             --success-bg: #ecfdf5;
             --error-color: #ef4444;
-
-            /* --- Search Button Colors --- */
             --search-btn-bg: #f0edff;
             --search-btn-hover: #e5e0ff;
-
-            /* --- Trending Chips Colors --- */
             --trending-bg: #ffffff;
             --trending-border: #e4e8f0;
             --trending-text: #7c3aed;
             --trending-text-hover: #6d28d9;
-
-            /* --- Footer & Social --- */
             --footer-bg: #ffffff;
             --social-color: #6c7a9a;
-
-            /* --- Spacing --- */
             --brand-margin-top: 8px;
-
-            /* --- Glow Effect --- */
             --glow: 0 0 40px rgba(124, 58, 237, 0.15);
-
-            /* --- Transitions --- */
             --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            /* 👇 Focus ring size - kam kar diya */
+            --focus-ring-size: 2px;
+            --focus-ring-color: rgba(124, 58, 237, 0.25);
         }
 
         /* ============================================================
-                   🌙 DARK MODE VARIABLES (Edit these to change dark theme)
+                   🌙 DARK MODE VARIABLES
                    ============================================================ */
         body.dark {
             --bg-primary: #0a0a14;
@@ -116,6 +90,7 @@
             --social-color: #7a7a9a;
             --success-bg: #1a2a1a;
             --glow: 0 0 40px rgba(167, 139, 250, 0.12);
+            --focus-ring-color: rgba(167, 139, 250, 0.25);
         }
 
         /* ============================================================
@@ -147,12 +122,11 @@
         }
 
         /* ============================================================
-                   🏠 HERO SECTION - Main container
+                   🏠 HERO SECTION
                    ============================================================ */
         .hero-section {
             background: var(--bg-hero);
             padding: 60px 28px 36px;
-            /* 👈 Increased top padding to accommodate line and icons */
             text-align: center;
             position: relative;
             width: 100%;
@@ -164,14 +138,11 @@
             backdrop-filter: blur(2px);
         }
 
-        /* ============================================================
-                   ➖ THIN LINE ABOVE THE LOGO (but below the icons)
-                   ============================================================ */
+        /* Thin line above logo */
         .hero-section::before {
             content: '';
             position: absolute;
             top: 50px;
-            /* 👈 Line positioned below the icons (icons are at top: 14px) */
             left: 50%;
             transform: translateX(-50%);
             width: 60px;
@@ -182,17 +153,15 @@
         }
 
         /* ============================================================
-                   🔄 TOP ICONS - Refresh & Dark Mode Toggle (ABOVE the line)
+                   🔄 TOP ICONS
                    ============================================================ */
         .top-icons {
             position: absolute;
             top: 14px;
-            /* 👈 Icons stay at the very top */
             right: 18px;
             display: flex;
             gap: 10px;
             z-index: 2;
-            /* 👈 Ensure icons stay above the line */
         }
 
         .refresh-icon,
@@ -230,7 +199,7 @@
         }
 
         /* ============================================================
-                   🏷️ BRAND / LOGO SECTION (Below the line)
+                   🏷️ BRAND / LOGO
                    ============================================================ */
         .brand-wrapper {
             display: flex;
@@ -238,7 +207,6 @@
             justify-content: center;
             gap: 12px;
             margin-top: 16px;
-            /* 👈 Space between line and logo */
             margin-bottom: 4px;
         }
 
@@ -272,7 +240,7 @@
             letter-spacing: 2px;
             display: block;
             margin-top: 4px;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
         .amazon-credit i {
@@ -280,27 +248,31 @@
             margin: 0 4px;
         }
 
+        /* ============================================================
+                   📝 INTRO TEXT - SMALLER
+                   ============================================================ */
         .intro-container {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .intro-text {
             color: var(--text-secondary);
-            font-size: 15px;
+            font-size: 12px;
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
+            letter-spacing: 0.3px;
         }
 
         .intro-text i {
             color: var(--accent-primary);
-            font-size: 16px;
+            font-size: 13px;
         }
 
         /* ============================================================
-                   🔍 SEARCH BAR - Input + Icon Button
+                   🔍 SEARCH BAR
                    ============================================================ */
         .search-wrapper {
             display: flex;
@@ -317,9 +289,11 @@
             box-shadow: var(--shadow-sm);
         }
 
+        /* 👇 Search wrapper focus - REDUCED GLOW */
         .search-wrapper:focus-within {
             border-color: var(--accent-primary);
-            box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.12), var(--shadow-sm);
+            box-shadow: 0 0 0 2px var(--focus-ring-color);
+            /* 👈 Glow kam kar diya */
         }
 
         .search-wrapper input[type="text"] {
@@ -370,26 +344,33 @@
             transform: scale(0.92);
         }
 
+        /* 👇 Search icon button focus - REDUCED GLOW */
+        .search-icon-btn:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+            border-radius: 0 var(--radius-full) var(--radius-full) 0;
+        }
+
         /* ============================================================
-                   📌 TRENDING CODES SECTION
+                   📌 TRENDING CODES - LARGER CHIPS
                    ============================================================ */
         .trending-section {
-            margin-top: 26px;
+            margin-top: 20px;
             width: 100%;
             max-width: 460px;
         }
 
         .trending-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .trending-label .fa-fire-flame-curved {
@@ -422,7 +403,7 @@
             border: 1.5px solid var(--trending-border);
             border-radius: var(--radius-full);
             padding: 8px 16px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--trending-text);
             cursor: pointer;
@@ -435,6 +416,9 @@
             align-items: center;
             gap: 5px;
             white-space: nowrap;
+            border: none;
+            background: var(--trending-bg);
+            border: 1.5px solid var(--trending-border);
         }
 
         .trending-chip i {
@@ -452,6 +436,12 @@
 
         .trending-chip:active {
             transform: translateY(0px) scale(0.96);
+        }
+
+        /* 👇 Trending chip focus - REDUCED GLOW */
+        .trending-chip:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
         }
 
         /* ============================================================
@@ -633,8 +623,16 @@
         }
 
         /* ============================================================
-                   🟣 VIEW PRODUCT BUTTON
+                   🟣 VIEW PRODUCT & COPY BUTTONS
                    ============================================================ */
+        .buy-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
         .buy-btn {
             padding: 14px 36px;
             background: var(--accent-gradient);
@@ -681,6 +679,49 @@
             display: inline-block;
         }
 
+        /* 👇 Buy button focus - REDUCED GLOW */
+        .buy-btn:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* ✨ Copy Link Button */
+        .copy-btn {
+            padding: 14px 20px;
+            border-radius: var(--radius-full);
+            border: 1.5px solid var(--border-light);
+            background: var(--bg-primary);
+            cursor: pointer;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .copy-btn:hover {
+            background: var(--search-btn-bg);
+            transform: translateY(-2px);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0px) scale(0.96);
+        }
+
+        /* 👇 Copy button focus - REDUCED GLOW */
+        .copy-btn:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+        }
+
+        /* ============================================================
+                   ✅ THANK YOU MESSAGE
+                   ============================================================ */
         .thanks-msg {
             display: none;
             background: var(--success-bg);
@@ -719,7 +760,6 @@
             transition: var(--transition);
         }
 
-        /* --- Social Icons - PLAIN LOGOS (no underline, no background, no border) --- */
         .social-icons {
             display: flex;
             justify-content: center;
@@ -735,11 +775,8 @@
             align-items: center;
             justify-content: center;
             text-decoration: none !important;
-            /* 👈 Force remove underline */
             background: transparent !important;
-            /* 👈 No background */
             border: none !important;
-            /* 👈 No border */
             padding: 4px;
             width: auto;
             height: auto;
@@ -804,7 +841,33 @@
         }
 
         /* ============================================================
-                   📱 RESPONSIVE DESIGN - Mobile Adjustments
+                   🎯 FOCUS RING - REDUCED GLOW (Global)
+                   ============================================================ */
+        :focus {
+            outline: none;
+        }
+
+        /* 👇 Sabhi buttons ke liye reduced glow */
+        .focus-ring:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 2px;
+            border-radius: 8px;
+        }
+
+        /* 👇 Search wrapper focus - REDUCED GLOW */
+        .search-wrapper:focus-within {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px var(--focus-ring-color);
+        }
+
+        /* 👇 Input field focus - NO EXTRA GLOW */
+        .search-wrapper input[type="text"]:focus {
+            box-shadow: none;
+            outline: none;
+        }
+
+        /* ============================================================
+                   📱 RESPONSIVE DESIGN
                    ============================================================ */
         @media (max-width: 640px) {
             .main-content {
@@ -813,14 +876,12 @@
 
             .hero-section {
                 padding: 50px 16px 28px;
-                /* 👈 Adjusted top padding for mobile */
                 border-radius: var(--radius-md);
             }
 
             .hero-section::before {
                 width: 40px;
                 top: 42px;
-                /* 👈 Line below icons on mobile */
             }
 
             .brand-wrapper {
@@ -849,6 +910,10 @@
                 padding: 13px 16px;
                 font-size: 17px;
                 min-width: 52px;
+            }
+
+            .trending-section {
+                max-width: 100%;
             }
 
             .trending-chips {
@@ -882,6 +947,11 @@
                 min-width: 170px;
                 padding: 12px 24px;
                 font-size: 14px;
+            }
+
+            .copy-btn {
+                padding: 12px 16px;
+                font-size: 13px;
             }
 
             .top-icons {
@@ -921,6 +991,10 @@
                 top: 38px;
             }
 
+            .intro-text {
+                font-size: 10px;
+            }
+
             .code-display {
                 font-size: 18px;
                 letter-spacing: 1px;
@@ -928,8 +1002,12 @@
             }
 
             .trending-chip {
-                font-size: 10px;
                 padding: 5px 10px;
+                font-size: 10px;
+            }
+
+            .trending-chip i {
+                display: none;
             }
 
             .brand-icon {
@@ -944,16 +1022,24 @@
             }
         }
 
-        @media (max-width: 360px) {
+        @media (max-width: 340px) {
             .trending-chip {
-                font-size: 9px;
                 padding: 4px 8px;
-            }
-            .trending-chip i {
-                display: none;
+                font-size: 9px;
             }
             .trending-chips {
                 gap: 4px;
+            }
+            .buy-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .buy-btn {
+                min-width: 100%;
+            }
+            .copy-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -961,81 +1047,87 @@
 <body>
 
     <div class="main-content">
-        <div class="hero-section">
+        <div class="hero-section" role="region" aria-label="Product Finder">
             <!-- ============================================================
-            🔄 TOP ICONS: Dark Mode Toggle & Refresh Button (ABOVE the line)
+            🔄 TOP ICONS: Dark Mode Toggle & Refresh Button
             ============================================================ -->
             <div class="top-icons">
-                <div id="darkModeToggle" class="dark-toggle" title="Toggle Theme">
-                    <i class="fa-solid fa-moon"></i>
-                </div>
-                <i id="btnRefresh" class="fa-solid fa-sync-alt refresh-icon" title="Reset"></i>
+                <button id="darkModeToggle" class="dark-toggle focus-ring" title="Toggle Theme" aria-pressed="false" aria-label="Toggle dark mode">
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                </button>
+                <button id="btnRefresh" class="refresh-icon focus-ring" title="Reset" aria-label="Reset form">
+                    <i class="fa-solid fa-sync-alt" aria-hidden="true"></i>
+                </button>
             </div>
 
             <!-- ============================================================
-            🏷️ BRAND / LOGO SECTION (BELOW the line)
+            🏷️ BRAND / LOGO
             ============================================================ -->
             <div class="brand-wrapper">
-                <i class="fa-solid fa-cube brand-icon"></i>
+                <i class="fa-solid fa-cube brand-icon" aria-hidden="true"></i>
                 <h2>Product <span>Finder</span></h2>
-                <i class="fa-solid fa-bag-shopping brand-icon" style="font-size:24px;"></i>
+                <i class="fa-solid fa-bag-shopping brand-icon" style="font-size:24px;" aria-hidden="true"></i>
             </div>
             <span class="amazon-credit">
-                <i class="fa-brands fa-amazon"></i> Powered by Amazon Affiliate
+                <i class="fa-brands fa-amazon" aria-hidden="true"></i> Powered by Amazon Affiliate
             </span>
 
+            <!-- ============================================================
+            📝 INTRO TEXT
+            ============================================================ -->
             <div class="intro-container">
                 <p class="intro-text">
-                    <i class="fa-solid fa-hashtag"></i>
+                    <i class="fa-solid fa-hashtag" aria-hidden="true"></i>
                     Enter the code from Instagram post &amp; search
-                    <i class="fa-regular fa-circle-check"></i>
+                    <i class="fa-regular fa-circle-check" aria-hidden="true"></i>
                 </p>
             </div>
 
             <!-- ============================================================
-            🔍 SEARCH BAR: Input + Search Icon Button
+            🔍 SEARCH BAR
             ============================================================ -->
-            <div class="search-wrapper">
-                <input type="text" id="productCode" placeholder="e.g. DEAL01, DEAL02" autocomplete="off" />
-                <button id="searchIconBtn" class="search-icon-btn" title="Search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="search-wrapper" role="search" aria-label="Search for product by code">
+                <input type="text" id="productCode" placeholder="e.g. DEAL01, DEAL02" autocomplete="off" aria-label="Product code" />
+                <button id="searchIconBtn" class="search-icon-btn focus-ring" title="Search" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                 </button>
             </div>
             <button id="btnSearch" style="display:none;"></button>
 
             <!-- ============================================================
-            📌 TRENDING CODES SECTION - SINGLE ROW ON MOBILE
+            📌 TRENDING CODES
             ============================================================ -->
             <div class="trending-section">
-                <div class="trending-label">
+                <div class="trending-label" aria-hidden="true">
                     <i class="fa-solid fa-fire-flame-curved"></i>
                     Trending Codes
                     <i class="fa-solid fa-arrow-trend-up"></i>
                 </div>
-                <div class="trending-chips">
-                    <div class="trending-chip" data-code="DEAL01">
-                        <i class="fa-regular fa-star"></i> DEAL01
-                    </div>
-                    <div class="trending-chip" data-code="DEAL02">
-                        <i class="fa-regular fa-star"></i> DEAL02
-                    </div>
-                    <div class="trending-chip" data-code="DEAL03">
-                        <i class="fa-regular fa-star"></i> DEAL03
-                    </div>
-                    <div class="trending-chip" data-code="DEAL04">
-                        <i class="fa-regular fa-star"></i> DEAL04
-                    </div>
+                <div class="trending-chips" id="trendingChips" role="list">
+                    <button class="trending-chip focus-ring" data-code="DEAL01" role="listitem">
+                        <i class="fa-regular fa-star" aria-hidden="true"></i> DEAL01
+                    </button>
+                    <button class="trending-chip focus-ring" data-code="DEAL02" role="listitem">
+                        <i class="fa-regular fa-star" aria-hidden="true"></i> DEAL02
+                    </button>
+                    <button class="trending-chip focus-ring" data-code="DEAL03" role="listitem">
+                        <i class="fa-regular fa-star" aria-hidden="true"></i> DEAL03
+                    </button>
+                    <button class="trending-chip focus-ring" data-code="DEAL04" role="listitem">
+                        <i class="fa-regular fa-star" aria-hidden="true"></i> DEAL04
+                    </button>
                 </div>
             </div>
 
             <!-- ⏳ Loading Spinner -->
-            <div id="loadingSpinner" class="spinner">
-                <div class="dotted-spinner"></div>
+            <div id="loadingSpinner" class="spinner" role="status" aria-live="polite" aria-atomic="true">
+                <div class="dotted-spinner" aria-hidden="true"></div>
+                <span class="sr-only" style="position:absolute;left:-9999px;">Loading...</span>
             </div>
 
             <!-- ❌ Error Message -->
-            <div id="errorMessage" class="error">
-                <i class="fa-solid fa-circle-exclamation"></i>
+            <div id="errorMessage" class="error" role="alert" aria-live="assertive">
+                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
                 <span id="errorText"></span>
             </div>
         </div>
@@ -1043,65 +1135,85 @@
         <!-- ============================================================
         🛍️ PRODUCT DISPLAY CARD
         ============================================================ -->
-        <div id="productDisplay" class="product-display-section">
+        <div id="productDisplay" class="product-display-section" aria-live="polite" aria-atomic="true">
             <div class="code-display-wrapper">
                 <div id="pCodeDisplay" class="code-display"></div>
                 <div id="celebrationMsg" class="celebration-msg">
-                    <i class="fa-regular fa-face-smile"></i> Wow! You found your product!
+                    <i class="fa-regular fa-face-smile" aria-hidden="true"></i> Wow! You found your product!
                 </div>
             </div>
 
             <hr class="styled-hr" />
 
             <div id="pTitle" class="product-title">
-                <i class="fa-regular fa-tag"></i> <span id="pTitleText"></span>
+                <i class="fa-regular fa-tag" aria-hidden="true"></i> <span id="pTitleText"></span>
             </div>
 
             <div id="clickText" class="click-instruction">
-                <i class="fa-solid fa-hand-pointer"></i>
+                <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i>
                 Tap the button below to view product
             </div>
 
             <div id="thanksMessage" class="thanks-msg">
-                <i class="fa-regular fa-circle-check"></i> Thank you for your support!
+                <i class="fa-regular fa-circle-check" aria-hidden="true"></i> Thank you for your support!
                 <span>Redirecting you to the product page...</span>
             </div>
 
-            <button id="pLink" class="buy-btn">
-                <i class="fa-solid fa-bag-shopping"></i> View Product
-            </button>
+            <!-- ============================================================
+            🟣 BUTTONS ROW: View Product + Copy Link
+            ============================================================ -->
+            <div class="buy-row">
+                <button id="pLink" class="buy-btn focus-ring" aria-label="View product (opens in new tab)">
+                    <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> View Product
+                </button>
+
+                <button id="copyLinkBtn" class="copy-btn focus-ring" aria-label="Copy product link to clipboard" title="Copy link">
+                    <i class="fa-regular fa-copy" aria-hidden="true"></i> Copy Link
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- ============================================================
-    📱 FOOTER SECTION - Plain social icons (no underline, no background, no border)
+    📱 FOOTER
     ============================================================ -->
     <footer class="footer-section">
         <div class="social-icons">
             <a href="https://www.facebook.com/share/1E598mYhuo/" target="_blank" rel="noopener noreferrer" class="facebook" title="Follow on Facebook">
-                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-facebook" aria-hidden="true"></i>
             </a>
             <a href="https://www.instagram.com/kapil2000_26?igsh=bmVuZ3Bza2VycmJj" target="_blank" rel="noopener noreferrer" class="instagram" title="Follow on Instagram">
-                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
             </a>
         </div>
 
         <div class="about-container">
-            <h3><i class="fa-regular fa-compass"></i> About Product Finder</h3>
+            <h3><i class="fa-regular fa-compass" aria-hidden="true"></i> About Product Finder</h3>
             <p>Enter the unique code shown in Instagram posts or reels to go directly to the real Amazon product page — fast, simple, and hassle-free.</p>
         </div>
 
         <p class="copyright-text">
-            <i class="fa-regular fa-copyright"></i> 2026 My Affiliate Store. All Rights Reserved.
+            <i class="fa-regular fa-copyright" aria-hidden="true"></i> 2026 My Affiliate Store. All Rights Reserved.
         </p>
     </footer>
 
     <!-- ============================================================
-    📜 JAVASCRIPT - Full Functionality
+    📜 JAVASCRIPT - All Features with Mobile Copy Fix
     ============================================================ -->
     <script>
+        /* ============================================================
+                   🆕 FEATURES:
+                   1. Dark mode persistence in localStorage
+                   2. Respects prefers-color-scheme
+                   3. Fuzzy search - matches by code OR product title
+                   4. Copy to clipboard - WORKS ON MOBILE + DESKTOP (with fallback)
+                   5. Accessibility improvements (ARIA labels, focus rings)
+                   6. Debounced search
+                   7. Prevent double-redirects
+                   ============================================================ */
+
         // ============================================================
-        // 🛒 PRODUCT DATABASE - Add or remove products here
+        // 🛒 PRODUCT DATABASE
         // ============================================================
         const productsDatabase = {
             "DEAL01": {
@@ -1123,18 +1235,64 @@
         };
 
         // ============================================================
+        // 🔍 FUZZY SEARCH - Build index for searching by title
+        // ============================================================
+        const productEntries = Object.entries(productsDatabase).map(([code, obj]) => ({
+            code,
+            title: obj.title,
+            titleLower: obj.title.toLowerCase(),
+            link: obj.link
+        }));
+
+        function findProductByCodeOrText(raw) {
+            if (!raw) return null;
+            const input = raw.trim().toLowerCase();
+
+            // 1. Try exact code match
+            for (const [code, obj] of Object.entries(productsDatabase)) {
+                if (code.toLowerCase() === input) return { code, ...obj };
+            }
+
+            // 2. Try partial code match
+            for (const entry of productEntries) {
+                if (entry.code.toLowerCase().includes(input)) {
+                    return { code: entry.code, title: entry.title, link: entry.link };
+                }
+            }
+
+            // 3. Try matching against product titles
+            for (const entry of productEntries) {
+                if (entry.titleLower.includes(input)) {
+                    return { code: entry.code, title: entry.title, link: entry.link };
+                }
+            }
+
+            // 4. Try numeric suffix (e.g. user types "1" -> finds DEAL01)
+            const digits = input.match(/\d+/);
+            if (digits) {
+                const maybe = productEntries.find(e => e.code.toLowerCase().endsWith(digits[0]));
+                if (maybe) return { code: maybe.code, title: maybe.title, link: maybe.link };
+            }
+
+            return null;
+        }
+
+        // ============================================================
         // 📦 STATE VARIABLES
         // ============================================================
-        let typewriterTimeout, isDeleting = false,
-            currentCharIndex = 0,
-            finalProductLink = "";
+        let typewriterTimeout = null;
+        let isDeleting = false;
+        let currentCharIndex = 0;
+        let finalProductLink = "";
         let redirectTimeout = null;
+        let isRedirecting = false;
+        let searchDebounce = null;
 
         // ============================================================
         // 🎯 DOM REFERENCES
         // ============================================================
         const darkToggle = document.getElementById('darkModeToggle');
-        const icon = darkToggle.querySelector('i');
+        const darkIcon = darkToggle.querySelector('i');
         const productCodeInput = document.getElementById('productCode');
         const searchIconBtn = document.getElementById('searchIconBtn');
         const refreshBtn = document.getElementById('btnRefresh');
@@ -1148,28 +1306,52 @@
         const thanksMsg = document.getElementById('thanksMessage');
         const buyBtn = document.getElementById('pLink');
         const spinner = document.getElementById('loadingSpinner');
+        const copyBtn = document.getElementById('copyLinkBtn');
+        const trendingChips = document.querySelectorAll('.trending-chip');
 
         // ============================================================
-        // 🌙 DARK MODE TOGGLE
+        // 🌙 DARK MODE PERSISTENCE
         // ============================================================
-        darkToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            if (document.body.classList.contains('dark')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
+        function applyInitialTheme() {
+            const stored = localStorage.getItem('pf_theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (stored === 'dark' || (!stored && prefersDark)) {
+                document.body.classList.add('dark');
+                darkIcon.classList.remove('fa-moon');
+                darkIcon.classList.add('fa-sun');
+                darkToggle.setAttribute('aria-pressed', 'true');
             } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
+                document.body.classList.remove('dark');
+                darkIcon.classList.remove('fa-sun');
+                darkIcon.classList.add('fa-moon');
+                darkToggle.setAttribute('aria-pressed', 'false');
+            }
+        }
+        applyInitialTheme();
+
+        darkToggle.addEventListener('click', () => {
+            const nowDark = document.body.classList.toggle('dark');
+            if (nowDark) {
+                darkIcon.classList.remove('fa-moon');
+                darkIcon.classList.add('fa-sun');
+                darkToggle.setAttribute('aria-pressed', 'true');
+                localStorage.setItem('pf_theme', 'dark');
+            } else {
+                darkIcon.classList.remove('fa-sun');
+                darkIcon.classList.add('fa-moon');
+                darkToggle.setAttribute('aria-pressed', 'false');
+                localStorage.setItem('pf_theme', 'light');
             }
         });
 
         // ============================================================
         // 📌 TRENDING CHIPS - Click to auto-fill and search
         // ============================================================
-        document.querySelectorAll('.trending-chip').forEach(chip => {
+        trendingChips.forEach(chip => {
             chip.addEventListener('click', () => {
-                productCodeInput.value = chip.getAttribute('data-code');
-                searchProduct();
+                const code = chip.getAttribute('data-code') || chip.textContent.trim();
+                productCodeInput.value = code;
+                searchProductImmediate();
             });
         });
 
@@ -1177,164 +1359,268 @@
         // ⌨️ TYPEWRITER EFFECT
         // ============================================================
         function stopTypewriter() {
-            if (typewriterTimeout) clearTimeout(typewriterTimeout);
+            if (typewriterTimeout) {
+                clearTimeout(typewriterTimeout);
+                typewriterTimeout = null;
+            }
             isDeleting = false;
             currentCharIndex = 0;
         }
 
         function startInfiniteTypewriter(text) {
-            if (typewriterTimeout) clearTimeout(typewriterTimeout);
+            stopTypewriter();
             if (!pCodeDisplay) return;
-
             celebMsg.classList.remove('show');
             celebMsg.style.opacity = '0';
-
             isDeleting = false;
             currentCharIndex = 0;
 
             function animate() {
                 if (!pCodeDisplay) return;
                 if (!isDeleting) {
-                    pCodeDisplay.innerText = text.substring(0, ++currentCharIndex);
+                    currentCharIndex++;
+                    pCodeDisplay.innerText = text.substring(0, currentCharIndex);
                 } else {
-                    pCodeDisplay.innerText = text.substring(0, --currentCharIndex);
+                    currentCharIndex--;
+                    pCodeDisplay.innerText = text.substring(0, currentCharIndex);
                 }
 
-                let speed = isDeleting ? 50 : 110;
+                let speed = isDeleting ? 40 : 100;
 
-                if (!isDeleting && currentCharIndex === text.length) {
+                if (!isDeleting && currentCharIndex >= text.length) {
                     celebMsg.style.opacity = '1';
                     celebMsg.classList.add('show');
-                    speed = 2000;
+                    speed = 1800;
                     isDeleting = true;
-                } else if (isDeleting && currentCharIndex === 0) {
+                } else if (isDeleting && currentCharIndex <= 0) {
                     celebMsg.classList.remove('show');
                     celebMsg.style.opacity = '0';
                     isDeleting = false;
                     speed = 400;
                 }
-
                 typewriterTimeout = setTimeout(animate, speed);
             }
             animate();
         }
 
         // ============================================================
-        // 🔍 SEARCH FUNCTION
+        // 🖥️ UI HELPERS
         // ============================================================
-        function searchProduct() {
-            const code = productCodeInput.value.trim().toUpperCase();
-
-            stopTypewriter();
-            if (redirectTimeout) clearTimeout(redirectTimeout);
-
-            celebMsg.classList.remove('show');
-            celebMsg.style.opacity = '0';
-            thanksMsg.style.display = 'none';
-            clickText.style.display = 'flex';
-            buyBtn.style.display = 'inline-flex';
-            buyBtn.classList.remove('loading');
-            buyBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> View Product';
-
-            displayDiv.style.display = 'none';
-            errorBox.style.display = 'none';
-
-            if (code === '') {
-                errorBox.style.display = 'flex';
-                errorText.textContent = 'Please enter a product code!';
-                return;
-            }
-
+        function showSpinner() {
             spinner.style.display = 'flex';
-
-            setTimeout(() => {
-                spinner.style.display = 'none';
-
-                if (productsDatabase[code]) {
-                    errorBox.style.display = 'none';
-                    pTitleText.textContent = productsDatabase[code].title;
-                    finalProductLink = productsDatabase[code].link;
-                    displayDiv.style.display = 'block';
-
-                    displayDiv.style.animation = 'none';
-                    requestAnimationFrame(() => {
-                        displayDiv.style.animation = 'fadeUp 0.5s ease';
-                    });
-
-                    startInfiniteTypewriter(code);
-                } else {
-                    displayDiv.style.display = 'none';
-                    errorBox.style.display = 'flex';
-                    errorText.textContent = 'Invalid code! Try: DEAL01, DEAL02, DEAL03, DEAL04';
-                }
-            }, 450);
         }
 
-        // ============================================================
-        // 🚀 REDIRECT FUNCTION
-        // ============================================================
-        function delayRedirect() {
-            if (!finalProductLink) return;
-
-            buyBtn.classList.add('loading');
-            buyBtn.innerHTML = '<span class="inline-spinner"></span> Redirecting...';
-            clickText.style.display = 'none';
-            thanksMsg.style.display = 'block';
-
-            if (redirectTimeout) clearTimeout(redirectTimeout);
-
-            redirectTimeout = setTimeout(() => {
-                window.open(finalProductLink, '_blank', 'noopener,noreferrer');
-                buyBtn.classList.remove('loading');
-                buyBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> View Product';
-                thanksMsg.style.display = 'none';
-                clickText.style.display = 'flex';
-                redirectTimeout = null;
-            }, 1500);
+        function hideSpinner() {
+            spinner.style.display = 'none';
         }
 
-        // ============================================================
-        // 🔄 REFRESH / RESET FUNCTION
-        // ============================================================
-        function refreshPage() {
-            stopTypewriter();
-            if (redirectTimeout) clearTimeout(redirectTimeout);
+        function showError(message) {
+            errorText.textContent = message;
+            errorBox.style.display = 'flex';
+            displayDiv.style.display = 'none';
+        }
 
-            productCodeInput.value = '';
+        function hideError() {
             errorBox.style.display = 'none';
+            errorText.textContent = '';
+        }
+
+        function resetProductDisplay() {
             displayDiv.style.display = 'none';
             thanksMsg.style.display = 'none';
             clickText.style.display = 'flex';
             buyBtn.classList.remove('loading');
+            buyBtn.disabled = false;
             buyBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> View Product';
             pCodeDisplay.textContent = '';
             pTitleText.textContent = '';
             celebMsg.classList.remove('show');
             celebMsg.style.opacity = '0';
             finalProductLink = '';
-            spinner.style.display = 'none';
+        }
+
+        // ============================================================
+        // 🔍 SEARCH FUNCTION
+        // ============================================================
+        function searchProductImmediate() {
+            const raw = productCodeInput.value;
+            stopTypewriter();
+
+            if (redirectTimeout) {
+                clearTimeout(redirectTimeout);
+                redirectTimeout = null;
+            }
+            isRedirecting = false;
+
+            hideError();
+            resetProductDisplay();
+
+            if (!raw || raw.trim() === '') {
+                showError('Please enter a product code!');
+                return;
+            }
+
+            showSpinner();
+
+            setTimeout(() => {
+                hideSpinner();
+                const result = findProductByCodeOrText(raw);
+
+                if (result) {
+                    hideError();
+                    pTitleText.textContent = result.title;
+                    finalProductLink = result.link;
+                    displayDiv.style.display = 'block';
+
+                    // Re-trigger animation
+                    displayDiv.style.animation = 'none';
+                    requestAnimationFrame(() => {
+                        displayDiv.style.animation = 'fadeUp 0.5s ease';
+                    });
+
+                    startInfiniteTypewriter(result.code);
+                    buyBtn.focus();
+                } else {
+                    showError('Invalid code! Try: DEAL01, DEAL02, DEAL03, DEAL04 or search by product name.');
+                }
+            }, 420);
+        }
+
+        // ============================================================
+        // 🚀 REDIRECT FUNCTION
+        // ============================================================
+        function delayRedirect() {
+            if (!finalProductLink || isRedirecting) return;
+            isRedirecting = true;
+
+            buyBtn.classList.add('loading');
+            buyBtn.disabled = true;
+            buyBtn.innerHTML = '<span class="inline-spinner" aria-hidden="true"></span> Redirecting...';
+            clickText.style.display = 'none';
+            thanksMsg.style.display = 'block';
+
+            redirectTimeout = setTimeout(() => {
+                window.open(finalProductLink, '_blank', 'noopener,noreferrer');
+                buyBtn.classList.remove('loading');
+                buyBtn.disabled = false;
+                buyBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> View Product';
+                thanksMsg.style.display = 'none';
+                clickText.style.display = 'flex';
+                isRedirecting = false;
+                redirectTimeout = null;
+            }, 1200);
+        }
+
+        // ============================================================
+        // 📋 COPY TO CLIPBOARD - FIXED FOR MOBILE + DESKTOP
+        // ============================================================
+        function showCopySuccess() {
+            const previous = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fa-regular fa-circle-check"></i> Copied!';
+            copyBtn.style.borderColor = 'var(--success-color)';
+            copyBtn.style.color = 'var(--success-color)';
+            setTimeout(() => {
+                copyBtn.innerHTML = previous;
+                copyBtn.style.borderColor = '';
+                copyBtn.style.color = '';
+            }, 2000);
+        }
+
+        async function copyLinkToClipboard() {
+            if (!finalProductLink) {
+                showError('No product link to copy. Search for a product first.');
+                return;
+            }
+
+            // Method 1: Modern Clipboard API (works on mobile + desktop)
+            try {
+                await navigator.clipboard.writeText(finalProductLink);
+                showCopySuccess();
+                return;
+            } catch (err) {
+                // Clipboard API failed - fallback to older method
+                console.log('Clipboard API failed, using fallback...', err);
+            }
+
+            // Method 2: Fallback using textarea (works on older browsers + mobile)
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = finalProductLink;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                textArea.style.top = '0';
+                textArea.style.width = '1px';
+                textArea.style.height = '1px';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+
+                if (successful) {
+                    showCopySuccess();
+                } else {
+                    // If both methods fail
+                    showError('Unable to copy link. Please select and copy the link manually.');
+                }
+            } catch (fallbackErr) {
+                // Final fallback: show error message with manual copy instruction
+                showError('Copy not supported on this browser. Please long-press the link to copy.');
+                console.error('Copy fallback error:', fallbackErr);
+            }
+        }
+
+        // ============================================================
+        // 🔄 REFRESH / RESET
+        // ============================================================
+        function refreshPage() {
+            stopTypewriter();
+            if (redirectTimeout) {
+                clearTimeout(redirectTimeout);
+                redirectTimeout = null;
+            }
+            isRedirecting = false;
+            productCodeInput.value = '';
+            hideError();
+            resetProductDisplay();
+            hideSpinner();
+            productCodeInput.focus();
         }
 
         // ============================================================
         // 🔗 EVENT BINDING
         // ============================================================
-        searchIconBtn.addEventListener('click', searchProduct);
-        document.getElementById('btnSearch').addEventListener('click', searchProduct);
+        searchIconBtn.addEventListener('click', searchProductImmediate);
+        document.getElementById('btnSearch').addEventListener('click', searchProductImmediate);
         buyBtn.addEventListener('click', delayRedirect);
+        copyBtn.addEventListener('click', copyLinkToClipboard);
         refreshBtn.addEventListener('click', refreshPage);
 
         productCodeInput.addEventListener('keypress', e => {
-            if (e.key === 'Enter') searchProduct();
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                searchProductImmediate();
+            }
         });
 
         // ============================================================
         // 🚀 INITIALIZATION
         // ============================================================
-        window.onload = () => {
+        window.addEventListener('load', () => {
             displayDiv.style.display = 'none';
             spinner.style.display = 'none';
             errorBox.style.display = 'none';
-        };
+            productCodeInput.focus();
+        });
+
+        // Cleanup on navigation
+        window.addEventListener('beforeunload', () => {
+            stopTypewriter();
+            if (redirectTimeout) clearTimeout(redirectTimeout);
+            if (searchDebounce) clearTimeout(searchDebounce);
+        });
     </script>
 </body>
 </html>
