@@ -20,16 +20,13 @@
                    ============================================================ */
         :root {
             --bg-primary: #f0f2f8;
-            --bg-secondary: #ffffff;
-            --bg-hero: #ffffff;
-            --bg-card: #ffffff;
+            --bg-body: #f0f2f8;
+            --bg-hero: transparent;
+            --bg-card: transparent;
             --text-primary: #0f0f1a;
             --text-secondary: #3d3d5c;
             --text-muted: #7a7a9a;
             --border-light: #e4e8f0;
-            --shadow-sm: 0 2px 16px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.07);
-            --shadow-lg: 0 16px 56px rgba(0, 0, 0, 0.10);
             --radius-sm: 12px;
             --radius-md: 18px;
             --radius-lg: 28px;
@@ -49,12 +46,10 @@
             --trending-border: #e4e8f0;
             --trending-text: #7c3aed;
             --trending-text-hover: #6d28d9;
-            --footer-bg: #ffffff;
+            --footer-bg: transparent;
             --social-color: #6c7a9a;
             --brand-margin-top: 8px;
-            --glow: 0 0 40px rgba(124, 58, 237, 0.15);
             --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            /* 👇 Focus ring size - kam kar diya */
             --focus-ring-size: 2px;
             --focus-ring-color: rgba(124, 58, 237, 0.25);
         }
@@ -64,16 +59,13 @@
                    ============================================================ */
         body.dark {
             --bg-primary: #0a0a14;
-            --bg-secondary: #12121f;
-            --bg-hero: #12121f;
-            --bg-card: #1a1a2e;
+            --bg-body: #0a0a14;
+            --bg-hero: transparent;
+            --bg-card: transparent;
             --text-primary: #f0f0f5;
             --text-secondary: #b0b0cc;
             --text-muted: #7a7a9a;
             --border-light: #2a2a44;
-            --shadow-sm: 0 2px 16px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 16px 56px rgba(0, 0, 0, 0.5);
             --code-color: #f0f0f5;
             --code-cursor: #a78bfa;
             --accent-primary: #a78bfa;
@@ -86,10 +78,9 @@
             --trending-border: #2a2a44;
             --trending-text: #a78bfa;
             --trending-text-hover: #c4b5fd;
-            --footer-bg: #12121f;
+            --footer-bg: transparent;
             --social-color: #7a7a9a;
             --success-bg: #1a2a1a;
-            --glow: 0 0 40px rgba(167, 139, 250, 0.12);
             --focus-ring-color: rgba(167, 139, 250, 0.25);
         }
 
@@ -102,15 +93,22 @@
             box-sizing: border-box;
         }
 
+        /* 👇 RIGHT SIDE SCROLLER REMOVED - overflow hidden */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
+            background: var(--bg-body);
             color: var(--text-primary);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             transition: var(--transition);
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
         .main-content {
@@ -119,30 +117,33 @@
             flex-direction: column;
             align-items: center;
             padding: 20px 16px 0;
+            background: var(--bg-body);
+            max-width: 100vw;
+            overflow-x: hidden;
         }
 
         /* ============================================================
-                   🏠 HERO SECTION
+                   🏠 HERO SECTION - NO CARD, PURE BACKGROUND
                    ============================================================ */
         .hero-section {
             background: var(--bg-hero);
-            padding: 60px 28px 36px;
+            padding: 40px 20px 30px;
             text-align: center;
             position: relative;
             width: 100%;
             max-width: 820px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
+            border-radius: 0;
+            box-shadow: none;
             transition: var(--transition);
-            border: 1px solid var(--border-light);
-            backdrop-filter: blur(2px);
+            border: none;
+            overflow: hidden;
         }
 
         /* Thin line above logo */
         .hero-section::before {
             content: '';
             position: absolute;
-            top: 50px;
+            top: 30px;
             left: 50%;
             transform: translateX(-50%);
             width: 60px;
@@ -157,8 +158,8 @@
                    ============================================================ */
         .top-icons {
             position: absolute;
-            top: 14px;
-            right: 18px;
+            top: 0px;
+            right: 0px;
             display: flex;
             gap: 10px;
             z-index: 2;
@@ -166,19 +167,19 @@
 
         .refresh-icon,
         .dark-toggle {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
             background: var(--bg-primary);
             color: var(--text-muted);
-            font-size: 18px;
+            font-size: 17px;
             cursor: pointer;
             transition: var(--transition);
             border: 1.5px solid var(--border-light);
-            box-shadow: var(--shadow-sm);
+            box-shadow: none;
         }
 
         .refresh-icon:hover,
@@ -187,7 +188,6 @@
             color: var(--accent-primary);
             border-color: var(--accent-primary);
             transform: scale(1.05);
-            box-shadow: var(--glow);
         }
 
         .refresh-icon:hover {
@@ -206,12 +206,13 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            margin-top: 16px;
-            margin-bottom: 4px;
+            margin-top: 12px;
+            margin-bottom: 2px;
+            flex-wrap: wrap;
         }
 
         .brand-icon {
-            font-size: 34px;
+            font-size: 32px;
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -219,7 +220,7 @@
         }
 
         .hero-section h2 {
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 800;
             letter-spacing: -0.5px;
             color: var(--text-primary);
@@ -233,14 +234,14 @@
         }
 
         .amazon-credit {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
             display: block;
-            margin-top: 4px;
-            margin-bottom: 14px;
+            margin-top: 2px;
+            margin-bottom: 12px;
         }
 
         .amazon-credit i {
@@ -252,7 +253,7 @@
                    📝 INTRO TEXT - SMALLER
                    ============================================================ */
         .intro-container {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .intro-text {
@@ -264,6 +265,7 @@
             justify-content: center;
             gap: 6px;
             letter-spacing: 0.3px;
+            flex-wrap: wrap;
         }
 
         .intro-text i {
@@ -272,7 +274,7 @@
         }
 
         /* ============================================================
-                   🔍 SEARCH BAR
+                   🔍 SEARCH BAR - NO CARD, PURE INPUT
                    ============================================================ */
         .search-wrapper {
             display: flex;
@@ -286,19 +288,17 @@
             border: 2px solid var(--border-light);
             transition: var(--transition);
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            box-shadow: none;
         }
 
-        /* 👇 Search wrapper focus - REDUCED GLOW */
         .search-wrapper:focus-within {
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 2px var(--focus-ring-color);
-            /* 👈 Glow kam kar diya */
         }
 
         .search-wrapper input[type="text"] {
             flex: 1;
-            padding: 15px 22px;
+            padding: 14px 20px;
             border: none;
             background: transparent;
             font-size: 15px;
@@ -320,18 +320,18 @@
         }
 
         .search-icon-btn {
-            padding: 15px 24px;
+            padding: 14px 22px;
             border: none;
             background: var(--search-btn-bg);
             color: var(--accent-primary);
-            font-size: 20px;
+            font-size: 19px;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            min-width: 62px;
+            min-width: 58px;
             border-radius: 0 var(--radius-full) var(--radius-full) 0;
         }
 
@@ -344,7 +344,6 @@
             transform: scale(0.92);
         }
 
-        /* 👇 Search icon button focus - REDUCED GLOW */
         .search-icon-btn:focus-visible {
             outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
@@ -352,7 +351,7 @@
         }
 
         /* ============================================================
-                   📌 TRENDING CODES - LARGER CHIPS
+                   📌 TRENDING CODES - NO CARD, PURE CHIPS
                    ============================================================ */
         .trending-section {
             margin-top: 20px;
@@ -366,11 +365,12 @@
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .trending-label .fa-fire-flame-curved {
@@ -380,30 +380,24 @@
             color: var(--success-color);
         }
 
+        /* 👇 Scroller removed - chips wrap to next line */
         .trending-chips {
             display: flex;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             gap: 8px;
             width: 100%;
             margin: 0 auto;
-            overflow-x: auto;
             padding: 4px 2px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-
-        .trending-chips::-webkit-scrollbar {
-            display: none;
         }
 
         .trending-chip {
             background: var(--trending-bg);
             border: 1.5px solid var(--trending-border);
             border-radius: var(--radius-full);
-            padding: 8px 16px;
-            font-size: 13px;
+            padding: 7px 15px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--trending-text);
             cursor: pointer;
@@ -411,18 +405,15 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-family: 'Inter', sans-serif;
-            flex-shrink: 0;
             display: flex;
             align-items: center;
             gap: 5px;
             white-space: nowrap;
-            border: none;
-            background: var(--trending-bg);
-            border: 1.5px solid var(--trending-border);
+            box-shadow: none;
         }
 
         .trending-chip i {
-            font-size: 11px;
+            font-size: 10px;
             opacity: 0.7;
         }
 
@@ -431,14 +422,13 @@
             transform: translateY(-2px);
             border-color: var(--accent-primary);
             color: var(--trending-text-hover);
-            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15);
+            box-shadow: none;
         }
 
         .trending-chip:active {
             transform: translateY(0px) scale(0.96);
         }
 
-        /* 👇 Trending chip focus - REDUCED GLOW */
         .trending-chip:focus-visible {
             outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
@@ -451,12 +441,12 @@
             display: none;
             justify-content: center;
             align-items: center;
-            margin-top: 18px;
+            margin-top: 16px;
         }
 
         .dotted-spinner {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border: 3px dotted var(--accent-primary);
             border-radius: 50%;
             border-top-color: transparent;
@@ -477,50 +467,49 @@
                    ============================================================ */
         .error {
             color: var(--error-color);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            margin-top: 14px;
+            margin-top: 12px;
             display: none;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             background: rgba(239, 68, 68, 0.08);
-            padding: 10px 22px;
+            padding: 8px 18px;
             border-radius: var(--radius-full);
             border: 1px solid rgba(239, 68, 68, 0.15);
         }
 
         .error i {
-            font-size: 16px;
+            font-size: 15px;
         }
 
         /* ============================================================
-                   🛍️ PRODUCT DISPLAY CARD
+                   🛍️ PRODUCT DISPLAY - NO CARD, PURE CONTENT
                    ============================================================ */
         .product-display-section {
             display: none;
             width: 100%;
             max-width: 580px;
-            margin: 30px auto 0;
-            padding: 30px 28px 26px;
+            margin: 28px auto 0;
+            padding: 20px 20px 18px;
             background: var(--bg-card);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-light);
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
             transition: var(--transition);
             animation: fadeUp 0.5s ease;
             position: relative;
-            overflow: hidden;
         }
 
         @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(20px) scale(0.97);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
             }
         }
 
@@ -528,7 +517,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 2px;
         }
 
         .code-display {
@@ -538,7 +527,7 @@
             letter-spacing: 4px;
             color: var(--code-color);
             font-family: 'Inter', sans-serif;
-            min-height: 42px;
+            min-height: 40px;
             transition: var(--transition);
         }
 
@@ -561,20 +550,20 @@
         }
 
         .celebration-msg {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--success-color);
             opacity: 0;
             transform: translateY(-6px);
             transition: all 0.5s ease;
-            min-height: 26px;
+            min-height: 24px;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
         .celebration-msg i {
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .celebration-msg.show {
@@ -586,8 +575,8 @@
             border: 0;
             height: 1.5px;
             background: var(--border-light);
-            margin: 16px auto;
-            width: 40%;
+            margin: 14px auto;
+            width: 30%;
             border-radius: 2px;
             transition: var(--transition);
         }
@@ -597,7 +586,7 @@
             font-weight: 600;
             line-height: 1.7;
             color: var(--text-primary);
-            margin: 4px 0 14px;
+            margin: 4px 0 12px;
             padding: 0 4px;
         }
 
@@ -607,19 +596,20 @@
         }
 
         .click-instruction {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             font-weight: 500;
+            flex-wrap: wrap;
         }
 
         .click-instruction i {
             color: var(--accent-primary);
-            font-size: 15px;
+            font-size: 14px;
         }
 
         /* ============================================================
@@ -634,29 +624,29 @@
         }
 
         .buy-btn {
-            padding: 14px 36px;
+            padding: 13px 32px;
             background: var(--accent-gradient);
             border: none;
             border-radius: var(--radius-full);
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             color: #ffffff;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             font-family: 'Inter', sans-serif;
-            min-width: 210px;
-            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.30);
+            min-width: 190px;
+            box-shadow: none;
             letter-spacing: 0.3px;
         }
 
         .buy-btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             background: var(--accent-gradient-hover);
-            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.40);
+            box-shadow: none;
         }
 
         .buy-btn:active {
@@ -679,7 +669,6 @@
             display: inline-block;
         }
 
-        /* 👇 Buy button focus - REDUCED GLOW */
         .buy-btn:focus-visible {
             outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
@@ -687,19 +676,20 @@
 
         /* ✨ Copy Link Button */
         .copy-btn {
-            padding: 14px 20px;
+            padding: 13px 18px;
             border-radius: var(--radius-full);
             border: 1.5px solid var(--border-light);
             background: var(--bg-primary);
             cursor: pointer;
             color: var(--text-primary);
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
             gap: 8px;
             font-family: 'Inter', sans-serif;
+            box-shadow: none;
         }
 
         .copy-btn:hover {
@@ -707,13 +697,13 @@
             transform: translateY(-2px);
             border-color: var(--accent-primary);
             color: var(--accent-primary);
+            box-shadow: none;
         }
 
         .copy-btn:active {
             transform: translateY(0px) scale(0.96);
         }
 
-        /* 👇 Copy button focus - REDUCED GLOW */
         .copy-btn:focus-visible {
             outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
@@ -726,12 +716,12 @@
             display: none;
             background: var(--success-bg);
             border: 1.5px dashed var(--success-color);
-            padding: 14px 20px;
+            padding: 12px 18px;
             border-radius: var(--radius-sm);
-            margin-top: 12px;
+            margin-top: 10px;
             color: var(--success-color);
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             animation: fadeUp 0.3s ease;
         }
 
@@ -741,35 +731,36 @@
 
         .thanks-msg span {
             display: block;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             opacity: 0.8;
             margin-top: 2px;
         }
 
         /* ============================================================
-                   📱 FOOTER SECTION
+                   📱 FOOTER SECTION - NO CARD
                    ============================================================ */
         .footer-section {
             background: var(--footer-bg);
             border-top: 1px solid var(--border-light);
-            padding: 32px 24px 20px;
+            padding: 28px 20px 16px;
             text-align: center;
             width: 100%;
-            margin-top: 48px;
+            margin-top: 40px;
             transition: var(--transition);
         }
 
         .social-icons {
             display: flex;
             justify-content: center;
-            gap: 28px;
-            margin-bottom: 18px;
+            gap: 24px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
         }
 
         .social-icons a {
             color: var(--social-color);
-            font-size: 28px;
+            font-size: 24px;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
@@ -785,7 +776,7 @@
         }
 
         .social-icons a:hover {
-            transform: translateY(-4px) scale(1.12);
+            transform: translateY(-3px) scale(1.1);
             box-shadow: none !important;
             background: transparent !important;
         }
@@ -804,19 +795,20 @@
         }
 
         .about-container {
-            max-width: 440px;
-            margin: 0 auto 16px;
+            max-width: 420px;
+            margin: 0 auto 12px;
         }
 
         .about-container h3 {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             color: var(--text-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
+            flex-wrap: wrap;
         }
 
         .about-container h3 i {
@@ -824,14 +816,14 @@
         }
 
         .about-container p {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
-            line-height: 1.8;
+            line-height: 1.7;
             font-weight: 500;
         }
 
         .copyright-text {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             font-weight: 500;
         }
@@ -841,26 +833,23 @@
         }
 
         /* ============================================================
-                   🎯 FOCUS RING - REDUCED GLOW (Global)
+                   🎯 FOCUS RING - REDUCED GLOW
                    ============================================================ */
         :focus {
             outline: none;
         }
 
-        /* 👇 Sabhi buttons ke liye reduced glow */
         .focus-ring:focus-visible {
             outline: 2px solid var(--accent-primary);
             outline-offset: 2px;
             border-radius: 8px;
         }
 
-        /* 👇 Search wrapper focus - REDUCED GLOW */
         .search-wrapper:focus-within {
             border-color: var(--accent-primary);
             box-shadow: 0 0 0 2px var(--focus-ring-color);
         }
 
-        /* 👇 Input field focus - NO EXTRA GLOW */
         .search-wrapper input[type="text"]:focus {
             box-shadow: none;
             outline: none;
@@ -871,22 +860,21 @@
                    ============================================================ */
         @media (max-width: 640px) {
             .main-content {
-                padding: 12px 10px 0;
+                padding: 12px 12px 0;
             }
 
             .hero-section {
-                padding: 50px 16px 28px;
-                border-radius: var(--radius-md);
+                padding: 32px 12px 24px;
             }
 
             .hero-section::before {
                 width: 40px;
-                top: 42px;
+                top: 24px;
             }
 
             .brand-wrapper {
                 gap: 8px;
-                margin-top: 12px;
+                margin-top: 10px;
             }
 
             .brand-icon {
@@ -902,14 +890,14 @@
             }
 
             .search-wrapper input[type="text"] {
-                padding: 13px 14px;
+                padding: 12px 14px;
                 font-size: 14px;
             }
 
             .search-icon-btn {
-                padding: 13px 16px;
+                padding: 12px 16px;
                 font-size: 17px;
-                min-width: 52px;
+                min-width: 50px;
             }
 
             .trending-section {
@@ -928,7 +916,7 @@
             }
 
             .trending-chip i {
-                font-size: 10px;
+                font-size: 9px;
             }
 
             .code-display {
@@ -938,46 +926,45 @@
             }
 
             .product-display-section {
-                padding: 22px 16px 20px;
-                margin: 20px 0 0;
-                border-radius: var(--radius-sm);
+                padding: 16px 12px 14px;
+                margin: 18px 0 0;
             }
 
             .buy-btn {
-                min-width: 170px;
-                padding: 12px 24px;
-                font-size: 14px;
-            }
-
-            .copy-btn {
-                padding: 12px 16px;
+                min-width: 160px;
+                padding: 11px 20px;
                 font-size: 13px;
             }
 
+            .copy-btn {
+                padding: 11px 14px;
+                font-size: 12px;
+            }
+
             .top-icons {
-                top: 10px;
-                right: 12px;
+                top: 0px;
+                right: 0px;
                 gap: 8px;
             }
 
             .refresh-icon,
             .dark-toggle {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
             }
 
             .footer-section {
-                padding: 24px 16px 16px;
-                margin-top: 32px;
+                padding: 20px 12px 12px;
+                margin-top: 28px;
             }
 
             .social-icons {
-                gap: 20px;
+                gap: 18px;
             }
 
             .social-icons a {
-                font-size: 26px;
+                font-size: 22px;
             }
         }
 
@@ -988,7 +975,7 @@
 
             .hero-section::before {
                 width: 30px;
-                top: 38px;
+                top: 20px;
             }
 
             .intro-text {
@@ -1015,10 +1002,10 @@
             }
 
             .social-icons a {
-                font-size: 22px;
+                font-size: 20px;
             }
             .social-icons {
-                gap: 16px;
+                gap: 14px;
             }
         }
 
@@ -1095,7 +1082,7 @@
             <button id="btnSearch" style="display:none;"></button>
 
             <!-- ============================================================
-            📌 TRENDING CODES
+            📌 TRENDING CODES - NO SCROLLER (wrap to next line)
             ============================================================ -->
             <div class="trending-section">
                 <div class="trending-label" aria-hidden="true">
@@ -1133,7 +1120,7 @@
         </div>
 
         <!-- ============================================================
-        🛍️ PRODUCT DISPLAY CARD
+        🛍️ PRODUCT DISPLAY - NO CARD
         ============================================================ -->
         <div id="productDisplay" class="product-display-section" aria-live="polite" aria-atomic="true">
             <div class="code-display-wrapper">
@@ -1175,7 +1162,7 @@
     </div>
 
     <!-- ============================================================
-    📱 FOOTER
+    📱 FOOTER - NO CARD
     ============================================================ -->
     <footer class="footer-section">
         <div class="social-icons">
@@ -1198,7 +1185,7 @@
     </footer>
 
     <!-- ============================================================
-    📜 JAVASCRIPT - All Features with Mobile Copy Fix
+    📜 JAVASCRIPT - All Features
     ============================================================ -->
     <script>
         /* ============================================================
@@ -1208,8 +1195,7 @@
                    3. Fuzzy search - matches by code OR product title
                    4. Copy to clipboard - WORKS ON MOBILE + DESKTOP (with fallback)
                    5. Accessibility improvements (ARIA labels, focus rings)
-                   6. Debounced search
-                   7. Prevent double-redirects
+                   6. Prevent double-redirects
                    ============================================================ */
 
         // ============================================================
@@ -1235,7 +1221,7 @@
         };
 
         // ============================================================
-        // 🔍 FUZZY SEARCH - Build index for searching by title
+        // 🔍 FUZZY SEARCH
         // ============================================================
         const productEntries = Object.entries(productsDatabase).map(([code, obj]) => ({
             code,
@@ -1248,26 +1234,22 @@
             if (!raw) return null;
             const input = raw.trim().toLowerCase();
 
-            // 1. Try exact code match
             for (const [code, obj] of Object.entries(productsDatabase)) {
                 if (code.toLowerCase() === input) return { code, ...obj };
             }
 
-            // 2. Try partial code match
             for (const entry of productEntries) {
                 if (entry.code.toLowerCase().includes(input)) {
                     return { code: entry.code, title: entry.title, link: entry.link };
                 }
             }
 
-            // 3. Try matching against product titles
             for (const entry of productEntries) {
                 if (entry.titleLower.includes(input)) {
                     return { code: entry.code, title: entry.title, link: entry.link };
                 }
             }
 
-            // 4. Try numeric suffix (e.g. user types "1" -> finds DEAL01)
             const digits = input.match(/\d+/);
             if (digits) {
                 const maybe = productEntries.find(e => e.code.toLowerCase().endsWith(digits[0]));
@@ -1286,7 +1268,6 @@
         let finalProductLink = "";
         let redirectTimeout = null;
         let isRedirecting = false;
-        let searchDebounce = null;
 
         // ============================================================
         // 🎯 DOM REFERENCES
@@ -1345,7 +1326,7 @@
         });
 
         // ============================================================
-        // 📌 TRENDING CHIPS - Click to auto-fill and search
+        // 📌 TRENDING CHIPS
         // ============================================================
         trendingChips.forEach(chip => {
             chip.addEventListener('click', () => {
@@ -1406,13 +1387,8 @@
         // ============================================================
         // 🖥️ UI HELPERS
         // ============================================================
-        function showSpinner() {
-            spinner.style.display = 'flex';
-        }
-
-        function hideSpinner() {
-            spinner.style.display = 'none';
-        }
+        function showSpinner() { spinner.style.display = 'flex'; }
+        function hideSpinner() { spinner.style.display = 'none'; }
 
         function showError(message) {
             errorText.textContent = message;
@@ -1472,7 +1448,6 @@
                     finalProductLink = result.link;
                     displayDiv.style.display = 'block';
 
-                    // Re-trigger animation
                     displayDiv.style.animation = 'none';
                     requestAnimationFrame(() => {
                         displayDiv.style.animation = 'fadeUp 0.5s ease';
@@ -1512,7 +1487,7 @@
         }
 
         // ============================================================
-        // 📋 COPY TO CLIPBOARD - FIXED FOR MOBILE + DESKTOP
+        // 📋 COPY TO CLIPBOARD
         // ============================================================
         function showCopySuccess() {
             const previous = copyBtn.innerHTML;
@@ -1532,17 +1507,14 @@
                 return;
             }
 
-            // Method 1: Modern Clipboard API (works on mobile + desktop)
             try {
                 await navigator.clipboard.writeText(finalProductLink);
                 showCopySuccess();
                 return;
             } catch (err) {
-                // Clipboard API failed - fallback to older method
                 console.log('Clipboard API failed, using fallback...', err);
             }
 
-            // Method 2: Fallback using textarea (works on older browsers + mobile)
             try {
                 const textArea = document.createElement('textarea');
                 textArea.value = finalProductLink;
@@ -1562,11 +1534,9 @@
                 if (successful) {
                     showCopySuccess();
                 } else {
-                    // If both methods fail
                     showError('Unable to copy link. Please select and copy the link manually.');
                 }
             } catch (fallbackErr) {
-                // Final fallback: show error message with manual copy instruction
                 showError('Copy not supported on this browser. Please long-press the link to copy.');
                 console.error('Copy fallback error:', fallbackErr);
             }
@@ -1615,11 +1585,9 @@
             productCodeInput.focus();
         });
 
-        // Cleanup on navigation
         window.addEventListener('beforeunload', () => {
             stopTypewriter();
             if (redirectTimeout) clearTimeout(redirectTimeout);
-            if (searchDebounce) clearTimeout(searchDebounce);
         });
     </script>
 </body>
