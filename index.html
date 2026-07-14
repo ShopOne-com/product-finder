@@ -40,28 +40,31 @@
         .header-icons .icon-box .fa-gear { color: #9b59b6; }
 
         /* ============================================== */
-        /* 🔥 FULL MOBILE WIDTH ADMIN MODAL (Premium)    */
+        /* 🔥 SPACIOUS & PREMIUM ADMIN MODAL             */
         /* ============================================== */
         #adminModalOverlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
-            z-index: 99999; display: none; align-items: flex-end; justify-content: center;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+            z-index: 99999; display: none; align-items: center; justify-content: center;
             opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease;
-            padding: 0;
+            padding: 15px;
         }
         #adminModalOverlay.active {
             display: flex; opacity: 1;
         }
         #adminModalBox {
-            background: #FFFFFF; width: 100%; max-width: 100%; /* Full mobile width */
-            border-radius: 24px 24px 0 0; /* Bottom sheet style (Premium) */
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-            padding: 20px; position: relative; max-height: 90vh; overflow-y: auto;
-            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            background: #FFFFFF; width: 95%; max-width: 500px; /* Spacious and premium */
+            border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+            padding: 25px 20px; position: relative; max-height: 88vh; overflow-y: auto;
+            transform: scale(0.95) translateY(20px); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         #adminModalOverlay.active #adminModalBox {
-            transform: translateY(0);
+            transform: scale(1) translateY(0);
         }
+        #adminModalBox::-webkit-scrollbar { width: 5px; }
+        #adminModalBox::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        #adminModalBox::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
         .modal-header {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 12px;
@@ -76,8 +79,8 @@
         
         .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .admin-grid input, .admin-grid select, .admin-grid textarea {
-            width: 100%; padding: 14px 16px; border: 1px solid #e0e0e0;
-            border-radius: 12px; font-size: 15px; outline: none; transition: 0.2s;
+            width: 100%; padding: 12px 14px; border: 1px solid #e0e0e0;
+            border-radius: 12px; font-size: 14px; outline: none; transition: 0.2s;
             background: #fafafa;
         }
         .admin-grid input:focus, .admin-grid select:focus, .admin-grid textarea:focus {
@@ -85,9 +88,52 @@
         }
         .admin-grid textarea { grid-column: span 2; resize: vertical; min-height: 60px; }
         .img-group-label { grid-column: span 2; font-size: 13px; font-weight: 600; color: var(--dark-green); margin-top: 5px; border-top: 1px solid #eee; padding-top: 12px; }
-        .admin-submit { grid-column: span 2; background: var(--dark-green); color: white; padding: 16px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 10px; font-size: 16px; }
+        
+        /* 🖼️ 5 ICON UPLOAD SYSTEM (No Text Inputs) */
+        .upload-icons-row {
+            grid-column: span 2; display: flex; gap: 10px; flex-wrap: wrap;
+            justify-content: center; padding: 5px 0;
+        }
+        @media (max-width: 480px) { .upload-icons-row { gap: 8px; } }
+        
+        .upload-icon-box {
+            width: 65px; height: 65px; border-radius: 16px;
+            border: 2px dashed #d0d0d0; background: #fcfcfc;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s ease; position: relative;
+        }
+        .upload-icon-box:active { transform: scale(0.92); }
+        .upload-icon-box:hover { border-color: var(--dark-green); background: #f0faf5; }
+        .upload-icon-box i { font-size: 24px; color: var(--dark-green); margin-bottom: 2px; }
+        .upload-icon-box span { font-size: 10px; color: var(--text-gray); font-weight: 500; }
+        .upload-icon-box .preview-img {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            object-fit: cover; border-radius: 14px; display: none;
+            border: 2px solid var(--dark-green);
+        }
+        
+        .admin-submit {
+            grid-column: span 2; background: var(--dark-green); color: white;
+            padding: 16px; border: none; border-radius: 16px; font-weight: 700;
+            font-size: 18px; cursor: pointer; width: 100%;
+            box-shadow: 0 4px 15px rgba(15, 157, 88, 0.3); transition: 0.2s;
+        }
         .admin-submit:active { transform: scale(0.95); }
-        @media (max-width: 480px) { .admin-grid { grid-template-columns: 1fr; } .admin-grid textarea, .img-group-label, .admin-submit { grid-column: span 1; } }
+
+        /* 🛍️ BEAUTIFUL MODAL FOOTER */
+        .modal-footer {
+            grid-column: span 2; text-align: center; padding-top: 18px;
+            margin-top: 10px; border-top: 1px solid #eee;
+            color: var(--text-gray); font-size: 14px; font-weight: 500;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
+        .modal-footer i { color: var(--dark-green); font-size: 18px; }
+
+        @media (max-width: 480px) {
+            .admin-grid { grid-template-columns: 1fr; }
+            .admin-grid textarea, .img-group-label, .admin-submit, .modal-footer, .upload-icons-row { grid-column: span 1; }
+            .upload-icon-box { width: 58px; height: 58px; }
+        }
 
         /* ============================================== */
         /* 🛒 SEARCH & CATEGORIES                        */
@@ -362,7 +408,7 @@
 </div>
 
 <!-- ============================================== -->
-<!-- 🚀 PREMIUM FULL MOBILE WIDTH ADMIN MODAL        -->
+<!-- 🚀 NEW 5-ICON UPLOAD ADMIN MODAL                -->
 <!-- ============================================== -->
 <div id="adminModalOverlay" onclick="closeAdminModal(event)">
     <div id="adminModalBox" onclick="event.stopPropagation();">
@@ -370,32 +416,74 @@
             <h3><i class="fa-solid fa-plus-circle"></i> Add Product</h3>
             <button class="modal-close-btn" onclick="closeAdminModal()"><i class="fa-solid fa-xmark"></i></button>
         </div>
+        
         <div class="admin-grid">
+            <!-- Basic Details -->
             <input type="text" id="pName" placeholder="Product Name *">
             <input type="text" id="pCode" placeholder="Code *">
-            <input type="text" id="pPrice" placeholder="Price (e.g. 22,999) *">
+            <input type="text" id="pPrice" placeholder="Price (e.g. 84,090) *">
             <select id="pCat">
                 <option value="kitchen">Kitchen</option>
                 <option value="electric">Electric</option>
                 <option value="beauty">Beauty</option>
             </select>
-            <input type="text" id="pSub" placeholder="Subtitle">
-            <textarea id="pDesc" rows="2" placeholder="Description"></textarea>
+            <input type="text" id="pSub" placeholder="Subtitle (e.g. Intel Core i5, 16GB RAM)">
+            <textarea id="pDesc" rows="3" placeholder="Product Description *"></textarea>
             
-            <!-- 🆕 New Inputs: Rating, Review & Affiliate Link -->
+            <!-- Rating, Review & Affiliate (Kept as per request) -->
             <input type="text" id="pRating" placeholder="Rating (e.g. 4.8)">
             <textarea id="pReview" rows="2" placeholder="Write a review about this product..."></textarea>
+            <input type="text" id="pAffiliate" placeholder="Affiliate Link (Checkout URL) *">
             
-            <input type="text" id="pAffiliate" placeholder="Affiliate Link (Check Out URL)">
-            
-            <div class="img-group-label"><i class="fa-solid fa-image"></i> 1 Thumbnail + 4 Large Images</div>
-            <input type="text" id="pThumb" placeholder="Thumbnail URL (Card Image) *">
-            <input type="text" id="pImg1" placeholder="Large Image 1">
-            <input type="text" id="pImg2" placeholder="Large Image 2">
-            <input type="text" id="pImg3" placeholder="Large Image 3">
-            <input type="text" id="pImg4" placeholder="Large Image 4">
+            <!-- 🖼️ 5 ICON UPLOAD SYSTEM (No Text Inputs) -->
+            <div class="img-group-label"><i class="fa-solid fa-image"></i> Upload Images (1 Thumb + 4 Large)</div>
+            <div class="upload-icons-row" id="imgUploadRow">
+                <!-- Thumbnail -->
+                <div class="upload-icon-box" onclick="document.getElementById('fileInputThumb').click()">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Thumb</span>
+                    <img id="previewThumb" class="preview-img" style="display:none;" />
+                    <input type="file" id="fileInputThumb" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewThumb', 'thumbData')">
+                </div>
+                <!-- Large 1 -->
+                <div class="upload-icon-box" onclick="document.getElementById('fileInputImg1').click()">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Img 1</span>
+                    <img id="previewImg1" class="preview-img" style="display:none;" />
+                    <input type="file" id="fileInputImg1" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg1', 'imgData1')">
+                </div>
+                <!-- Large 2 -->
+                <div class="upload-icon-box" onclick="document.getElementById('fileInputImg2').click()">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Img 2</span>
+                    <img id="previewImg2" class="preview-img" style="display:none;" />
+                    <input type="file" id="fileInputImg2" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg2', 'imgData2')">
+                </div>
+                <!-- Large 3 -->
+                <div class="upload-icon-box" onclick="document.getElementById('fileInputImg3').click()">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Img 3</span>
+                    <img id="previewImg3" class="preview-img" style="display:none;" />
+                    <input type="file" id="fileInputImg3" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg3', 'imgData3')">
+                </div>
+                <!-- Large 4 -->
+                <div class="upload-icon-box" onclick="document.getElementById('fileInputImg4').click()">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Img 4</span>
+                    <img id="previewImg4" class="preview-img" style="display:none;" />
+                    <input type="file" id="fileInputImg4" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg4', 'imgData4')">
+                </div>
+            </div>
 
-            <button class="admin-submit" onclick="addProduct()"><i class="fa-solid fa-check"></i> Add Product (Global)</button>
+            <!-- ⚡ Publish Button -->
+            <button class="admin-submit" onclick="addProduct()">
+                <i class="fa-solid fa-check-circle"></i> Publish Product
+            </button>
+
+            <!-- 🛍️ BEAUTIFUL FOOTER -->
+            <div class="modal-footer">
+                <i class="fa-solid fa-box-open"></i> Amazon Product Home
+            </div>
         </div>
     </div>
 </div>
@@ -446,7 +534,43 @@
         };
 
         // ==============================================
-        // 📦 4. DEFAULT PRODUCTS (All 6 Old Products with Affiliate Links)
+        // 📤 4. IMAGE UPLOAD HANDLER (No Text Inputs)
+        // ==============================================
+        // Global variables to store Base64 strings
+        let thumbData = '', imgData1 = '', imgData2 = '', imgData3 = '', imgData4 = '';
+
+        window.handleUpload = function(input, previewId, dataVar) {
+            const file = input.files[0];
+            if (!file) return;
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Image size should be less than 2MB for better performance.');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Store in variables
+                if (dataVar === 'thumbData') thumbData = e.target.result;
+                else if (dataVar === 'imgData1') imgData1 = e.target.result;
+                else if (dataVar === 'imgData2') imgData2 = e.target.result;
+                else if (dataVar === 'imgData3') imgData3 = e.target.result;
+                else if (dataVar === 'imgData4') imgData4 = e.target.result;
+
+                // Show preview inside the box
+                const previewImg = document.getElementById(previewId);
+                previewImg.src = e.target.result;
+                previewImg.style.display = 'block';
+                // Hide the icon and text inside this specific box
+                const parentBox = previewImg.parentElement;
+                const icon = parentBox.querySelector('i');
+                const span = parentBox.querySelector('span');
+                if(icon) icon.style.display = 'none';
+                if(span) span.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        };
+
+        // ==============================================
+        // 📦 5. DEFAULT PRODUCTS (All 6 Old Products with Affiliate Links)
         // ==============================================
         const baseProductsData = [
             { id: 1, code: "HP-2606SDW", name: "HP LaserJet MFP 2606sdw", subtitle: "Print, Scan, Copy • 22 ppm Speed • Auto-Duplex", price: "22,999", rating: "4.0", badgeIcon: "fa-fire", badgeColor: "#e74c3c", category: "electric", img: "https://m.media-amazon.com/images/I/61Tkw06wPDL._SL1500_.jpg", images: ["https://m.media-amazon.com/images/I/51V0H62h5cL._SL1080_.jpg","https://m.media-amazon.com/images/I/51VaMo3izvL._SL1080_.jpg","https://m.media-amazon.com/images/I/81oeMzga-LL._SL1500_.jpg","https://m.media-amazon.com/images/I/51ZBJRKkcEL._SL1080_.jpg","https://m.media-amazon.com/images/I/716Udm5FnvL._SL1500_.jpg"], description: "The HP LaserJet MFP 2606sdw is an exceptional all-in-one printer designed for high productivity. It delivers blazing-fast printing up to 22 pages per minute, seamless wireless connectivity (Bluetooth LE, Wi-Fi, Ethernet), and a 40-sheet Automatic Document Feeder (ADF) for effortless scanning and copying. With a robust 250-sheet input tray, a reliable 1-year warranty, and sharp Black & White output, it is the perfect workhorse for any busy office or home environment.", reviews: [ { name: "Deal Pocket", text: "This printer has been an absolute workhorse for our small office! The 22 ppm speed is incredibly fast, and the wireless connectivity works seamlessly from all our laptops and phones. The auto-duplex feature saves a ton of paper, and the 40-sheet ADF makes scanning multi-page contracts effortless. Highly recommended for anyone looking for a durable and efficient printer." } ], affiliateLink: "https://link.amazon/B0hbH6R50" },
@@ -458,7 +582,7 @@
         ];
 
         // ==============================================
-        // 📥 5. LOAD PRODUCTS & SMART SEEDING (Prevents duplicates)
+        // 📥 6. LOAD PRODUCTS & SMART SEEDING (Prevents duplicates)
         // ==============================================
         function loadProducts() {
             db.ref('products').on('value', (snapshot) => {
@@ -466,12 +590,10 @@
                 allProducts = [];
                 
                 if (data) {
-                    // Convert to array
                     Object.keys(data).forEach(key => {
                         allProducts.push({ id: key, ...data[key] });
                     });
 
-                    // 🔥 SMART SEEDING: Check if base products already exist, if not, add them!
                     const existingCodes = new Set(allProducts.map(p => p.code));
                     baseProductsData.forEach(product => {
                         if (!existingCodes.has(product.code)) {
@@ -479,7 +601,6 @@
                         }
                     });
                 } else {
-                    // If completely empty, seed all.
                     baseProductsData.forEach(product => {
                         db.ref('products').push(product);
                     });
@@ -490,7 +611,7 @@
         }
 
         // ==============================================
-        // 🎨 6. RENDER PRODUCTS
+        // 🎨 7. RENDER PRODUCTS
         // ==============================================
         function renderItems(items) {
             container.innerHTML = '';
@@ -530,7 +651,7 @@
         }
 
         // ==============================================
-        // 🔍 7. FILTER AND SEARCH
+        // 🔍 8. FILTER AND SEARCH
         // ==============================================
         filterButtons.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -563,7 +684,7 @@
         document.getElementById('searchBtn').addEventListener('click', applyFilters);
 
         // ==============================================
-        // 🆕 8. ADD PRODUCT FUNCTION (With Affiliate Link)
+        // 🆕 9. ADD PRODUCT FUNCTION (Using global variables)
         // ==============================================
         window.addProduct = function() {
             const name = document.getElementById('pName').value.trim();
@@ -574,17 +695,17 @@
             const description = document.getElementById('pDesc').value.trim();
             const rating = document.getElementById('pRating').value.trim();
             const reviewText = document.getElementById('pReview').value.trim();
-            // 🆕 Read Affiliate Link
             const affiliateLink = document.getElementById('pAffiliate').value.trim();
 
-            const thumb = document.getElementById('pThumb').value.trim();
-            const img1 = document.getElementById('pImg1').value.trim();
-            const img2 = document.getElementById('pImg2').value.trim();
-            const img3 = document.getElementById('pImg3').value.trim();
-            const img4 = document.getElementById('pImg4').value.trim();
+            // 🔥 Get images from global variables (No text inputs!)
+            const thumb = thumbData;
+            const img1 = imgData1;
+            const img2 = imgData2;
+            const img3 = imgData3;
+            const img4 = imgData4;
 
-            if(!name || !code || !price || !thumb) {
-                alert('Please fill Name, Code, Price, and Thumbnail URL!');
+            if(!name || !code || !price || !thumb || !affiliateLink) {
+                alert('Please fill Name, Code, Price, Upload Thumbnail, and Affiliate Link!');
                 return;
             }
 
@@ -611,25 +732,37 @@
                 reviews: reviewsArray,
                 badgeIcon: "fa-star", 
                 badgeColor: "#f1c40f",
-                affiliateLink: affiliateLink || '#' // 🆕 Saved to Firebase
+                affiliateLink: affiliateLink
             };
 
             db.ref('products').push(newProduct)
                 .then(() => {
-                    alert('✅ Product Added Successfully!');
+                    alert('✅ Product Added Successfully! It is now live for everyone.');
+                    // Clear all inputs and global vars
                     document.getElementById('pName').value = '';
                     document.getElementById('pCode').value = '';
                     document.getElementById('pPrice').value = '';
-                    document.getElementById('pThumb').value = '';
-                    document.getElementById('pImg1').value = '';
-                    document.getElementById('pImg2').value = '';
-                    document.getElementById('pImg3').value = '';
-                    document.getElementById('pImg4').value = '';
                     document.getElementById('pSub').value = '';
                     document.getElementById('pDesc').value = '';
                     document.getElementById('pRating').value = '';
                     document.getElementById('pReview').value = '';
-                    document.getElementById('pAffiliate').value = ''; // Clear Affiliate field
+                    document.getElementById('pAffiliate').value = '';
+                    
+                    // Reset image globals
+                    thumbData = ''; imgData1 = ''; imgData2 = ''; imgData3 = ''; imgData4 = '';
+                    
+                    // Reset UI for icons
+                    const previews = document.querySelectorAll('.preview-img');
+                    previews.forEach(el => {
+                        el.style.display = 'none';
+                        el.src = '';
+                        const parentBox = el.parentElement;
+                        const icon = parentBox.querySelector('i');
+                        const span = parentBox.querySelector('span');
+                        if(icon) icon.style.display = 'flex';
+                        if(span) span.style.display = 'block';
+                    });
+
                     closeAdminModal();
                 })
                 .catch((error) => {
@@ -639,7 +772,7 @@
         };
 
         // ==============================================
-        // 🛒 9. CARD CLICK -> MODAL (With Affiliate Link check)
+        // 🛒 10. CARD CLICK -> EXPANDED MODAL
         // ==============================================
         container.addEventListener('click', function(e) {
             const card = e.target.closest('.item-card');
@@ -652,8 +785,6 @@
             document.getElementById('modalPrice').innerText = `₹${item.price}`;
             document.getElementById('modalDesc').innerText = (item.description || 'No description available.') + `\n\nCode: ${item.code}`;
             document.getElementById('modalFooterPrice').innerText = `₹${item.price}`;
-            
-            // 🔗 Wire the affiliate link to the Check Out button
             document.getElementById('modalActionBtn').href = item.affiliateLink || '#';
 
             const track = document.getElementById('modalSliderTrack');
@@ -691,7 +822,7 @@
         };
 
         // ==============================================
-        // 🚀 10. INITIALIZE AND EXISTING FEATURES
+        // 🚀 11. INITIALIZE AND EXISTING FEATURES
         // ==============================================
         loadProducts();
 
