@@ -855,7 +855,7 @@
     }
 
     // ==============================================
-    // 🛠️ 10. ADMIN CRUD OPERATIONS
+    // 🛠️ 10. ADMIN CRUD OPERATIONS (Fixed)
     // ==============================================
     const uploadImageToStorage = async (file, path) => {
         if (!file) return null;
@@ -878,81 +878,103 @@
         btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
         btn.disabled = true;
 
-        const name = document.getElementById('pName').value.trim();
-        const code = document.getElementById('pCode').value.trim();
-        const price = document.getElementById('pPrice').value.trim();
-        const category = document.getElementById('pCat').value;
-        const subtitle = document.getElementById('pSub').value.trim();
-        const description = document.getElementById('pDesc').value.trim();
-        const rating = document.getElementById('pRating').value.trim();
-        const reviewText = document.getElementById('pReview').value.trim();
-        const affiliateLink = document.getElementById('pAffiliate').value.trim();
-
-        if(!name || !code || !price || !description || !affiliateLink) {
-            alert('Please fill Name, Code, Price, Description, and Affiliate Link!');
-            btn.innerHTML = originalText; btn.disabled = false;
-            return;
-        }
-
-        // Validate URL
-        const urlRegex = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-.\/?%&=]*)?$/;
-        if (!urlRegex.test(affiliateLink)) {
-            alert("Invalid Affiliate Link URL. Please include 'https://'.");
-            btn.innerHTML = originalText; btn.disabled = false;
-            return;
-        }
-
-        const productId = isEdit ? document.getElementById('editProductId').value : db.ref('products').push().key;
-
-        // Upload Images to Firebase Storage
-        const timestamp = Date.now();
-        const thumbUrl = await uploadImageToStorage(thumbData, `products/${productId}/thumb_${timestamp}`);
-        const img1Url = await uploadImageToStorage(imgData1, `products/${productId}/img1_${timestamp}`);
-        const img2Url = await uploadImageToStorage(imgData2, `products/${productId}/img2_${timestamp}`);
-        const img3Url = await uploadImageToStorage(imgData3, `products/${productId}/img3_${timestamp}`);
-        const img4Url = await uploadImageToStorage(imgData4, `products/${productId}/img4_${timestamp}`);
-
-        if (!thumbUrl) {
-            alert("Thumbnail upload failed. Please try again.");
-            btn.innerHTML = originalText; btn.disabled = false;
-            return;
-        }
-
-        const imagesArray = [img1Url, img2Url, img3Url, img4Url].filter(url => url !== null);
-
-        let reviewsArray = [];
-        if (reviewText) {
-            reviewsArray.push({ name: "Deal Pocket", text: reviewText });
-        }
-
-        const productData = {
-            name: name,
-            code: code,
-            price: parseFloat(price),
-            category: category,
-            thumbnail: thumbUrl,
-            images: imagesArray,
-            subtitle: subtitle || 'New Arrival',
-            description: description,
-            rating: rating || '4.8',
-            reviews: reviewsArray,
-            affiliateLink: affiliateLink,
-            createdAt: firebase.database.ServerValue.TIMESTAMP,
-            badgeIcon: "fa-star",
-            badgeColor: "#f1c40f"
-        };
-
         try {
+            const name = document.getElementById('pName').value.trim();
+            const code = document.getElementById('pCode').value.trim();
+            const price = document.getElementById('pPrice').value.trim();
+            const category = document.getElementById('pCat').value;
+            const subtitle = document.getElementById('pSub').value.trim();
+            const description = document.getElementById('pDesc').value.trim();
+            const rating = document.getElementById('pRating').value.trim();
+            const reviewText = document.getElementById('pReview').value.trim();
+            const affiliateLink = document.getElementById('pAffiliate').value.trim();
+
+            if(!name || !code || !price || !description || !affiliateLink) {
+                alert('Please fill Name, Code, Price, Description, and Affiliate Link!');
+                btn.innerHTML = originalText; btn.disabled = false;
+                return;
+            }
+
+            // Validate URL
+            const urlRegex = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-.\/?%&=]*)?$/;
+            if (!urlRegex.test(affiliateLink)) {
+                alert("Invalid Affiliate Link URL. Please include 'https://'.");
+                btn.innerHTML = originalText; btn.disabled = false;
+                return;
+            }
+
+            const productId = isEdit ? document.getElementById('editProductId').value : db.ref('products').push().key;
+
+            // Upload Images to Firebase Storage
+            const timestamp = Date.now();
+            const uploads = [
+                { file: thumbData, path: `products/${productId}/thumb_${timestamp}` },
+                { file: imgData1, path: `products/${productId}/img1_${timestamp}` },
+                { file: imgData2, path: `products/${productId}/img2_${timestamp}` },
+                { file: imgData3, path: `products/${productId}/img3_${timestamp}` },
+                { file: imgData4, path: `products/${productId}/img4_${timestamp}` }
+            ];
+
+            // Upload all images in parallel
+            const uploadResults = await Promise.all(
+                uploads.map(async (u) => {
+                    if (!u.file) return null;
+                    try {
+                        const ref = storage.ref(u.path);
+                        await ref.put(u.file);
+                        return await ref.getDownloadURL();
+                    } catch (e) {
+                        console.error('Upload error for', u.path, e);
+                        return null;
+                    }
+                })
+            );
+
+            const [thumbUrl, img1Url, img2Url, img3Url, img4Url] = uploadResults;
+
+            if (!thumbUrl) {
+                alert("Thumbnail upload failed. Please try again.");
+                btn.innerHTML = originalText; btn.disabled = false;
+                return;
+            }
+
+            const imagesArray = [img1Url, img2Url, img3Url, img4Url].filter(url => url !== null);
+
+            let reviewsArray = [];
+            if (reviewText) {
+                reviewsArray.push({ name: "Deal Pocket", text: reviewText });
+            }
+
+            const productData = {
+                name: name,
+                code: code,
+                price: parseFloat(price),
+                category: category,
+                thumbnail: thumbUrl,
+                images: imagesArray,
+                subtitle: subtitle || 'New Arrival',
+                description: description,
+                rating: rating || '4.8',
+                reviews: reviewsArray,
+                affiliateLink: affiliateLink,
+                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                badgeIcon: "fa-star",
+                badgeColor: "#f1c40f"
+            };
+
             if (isEdit) {
                 await db.ref('products/' + productId).update(productData);
             } else {
                 await db.ref('products/' + productId).set(productData);
             }
+
             btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Published!';
             setTimeout(() => resetAdminForm(btn, originalText, deleteBtn), 1500);
+
         } catch (error) {
             alert('❌ Error: ' + error.message);
-            btn.innerHTML = originalText; btn.disabled = false;
+            btn.innerHTML = originalText;
+            btn.disabled = false;
         }
     };
 
