@@ -39,14 +39,59 @@
         .header-icons .icon-box .fa-bars { color: var(--dark-green); }
         .header-icons .icon-box .fa-gear { color: #9b59b6; }
 
-        #adminPanel { display: none; background: #FFFFFF; padding: 20px; border-radius: var(--radius); margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid rgba(15, 157, 88, 0.2); }
-        #adminPanel h3 { color: var(--dark-green); margin-bottom: 15px; }
-        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .admin-grid input, .admin-grid select, .admin-grid textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; }
-        .admin-grid textarea { grid-column: span 2; }
-        .admin-submit { grid-column: span 2; background: var(--dark-green); color: white; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        @media (max-width: 480px) { .admin-grid { grid-template-columns: 1fr; } .admin-grid textarea { grid-column: span 1; } .admin-submit { grid-column: span 1; } }
+        /* ============================================== */
+        /* 🔥 FULL MOBILE WIDTH ADMIN MODAL (Premium)    */
+        /* ============================================== */
+        #adminModalOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
+            z-index: 99999; display: none; align-items: flex-end; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease;
+            padding: 0;
+        }
+        #adminModalOverlay.active {
+            display: flex; opacity: 1;
+        }
+        #adminModalBox {
+            background: #FFFFFF; width: 100%; max-width: 100%; /* Full mobile width */
+            border-radius: 24px 24px 0 0; /* Bottom sheet style (Premium) */
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+            padding: 20px; position: relative; max-height: 90vh; overflow-y: auto;
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        #adminModalOverlay.active #adminModalBox {
+            transform: translateY(0);
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 12px;
+        }
+        .modal-header h3 { font-size: 20px; color: var(--dark-green); display: flex; align-items: center; gap: 8px; }
+        .modal-close-btn {
+            background: #f0f0f0; border: none; font-size: 18px; cursor: pointer; color: #555;
+            transition: 0.2s; width: 34px; height: 34px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal-close-btn:hover { background: #e0e0e0; transform: rotate(90deg); }
+        
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .admin-grid input, .admin-grid select, .admin-grid textarea {
+            width: 100%; padding: 14px 16px; border: 1px solid #e0e0e0;
+            border-radius: 12px; font-size: 15px; outline: none; transition: 0.2s;
+            background: #fafafa;
+        }
+        .admin-grid input:focus, .admin-grid select:focus, .admin-grid textarea:focus {
+            border-color: var(--dark-green); box-shadow: 0 0 0 3px rgba(15, 157, 88, 0.1); background: #fff;
+        }
+        .admin-grid textarea { grid-column: span 2; resize: vertical; min-height: 60px; }
+        .img-group-label { grid-column: span 2; font-size: 13px; font-weight: 600; color: var(--dark-green); margin-top: 5px; border-top: 1px solid #eee; padding-top: 12px; }
+        .admin-submit { grid-column: span 2; background: var(--dark-green); color: white; padding: 16px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 10px; font-size: 16px; }
+        .admin-submit:active { transform: scale(0.95); }
+        @media (max-width: 480px) { .admin-grid { grid-template-columns: 1fr; } .admin-grid textarea, .img-group-label, .admin-submit { grid-column: span 1; } }
 
+        /* ============================================== */
+        /* 🛒 SEARCH & CATEGORIES                        */
+        /* ============================================== */
         .search-area { display: flex; align-items: center; margin-bottom: 20px; }
         .search-box { flex: 1; position: relative; display: flex; align-items: center; background: var(--bg-color); border: 1px solid var(--dark-green); border-radius: 50px; padding: 0 8px 0 0; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
         .search-box:hover { border: 2px solid var(--dark-green); }
@@ -97,6 +142,7 @@
         .code-chip { background: rgba(155, 89, 182, 0.12); color: #9b59b6; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; font-family: monospace; letter-spacing: 0.5px; }
         .no-results { text-align: center; color: var(--text-gray); padding: 20px; display: none; }
 
+        /* 🍃 EXPANDABLE MODAL */
         .expanded-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--modal-bg); z-index: 9999; flex-direction: column; animation: slideUp 0.3s ease-out forwards; }
         .expanded-header { display: flex; justify-content: flex-end; align-items: center; padding: 15px 20px; border-bottom: 1px solid rgba(15, 157, 88, 0.08); background: var(--modal-bg); flex-shrink: 0; }
         .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-gray); }
@@ -194,25 +240,6 @@
         </div>
     </div>
 
-    <div id="adminPanel">
-        <h3><i class="fa-solid fa-plus-circle"></i> Add New Product (Live)</h3>
-        <div class="admin-grid">
-            <input type="text" id="pName" placeholder="Product Name">
-            <input type="text" id="pCode" placeholder="Code">
-            <input type="text" id="pPrice" placeholder="Price (e.g. 22,999)">
-            <select id="pCat">
-                <option value="kitchen">Kitchen</option>
-                <option value="electric">Electric</option>
-                <option value="beauty">Beauty</option>
-            </select>
-            <input type="text" id="pImg" placeholder="Image URL">
-            <input type="text" id="pSub" placeholder="Subtitle">
-            <textarea id="pDesc" rows="3" placeholder="Description"></textarea>
-            <button class="admin-submit" onclick="addProduct()"><i class="fa-solid fa-check"></i> Add Product (Global)</button>
-        </div>
-        <p style="font-size:12px; color:var(--text-gray); margin-top:10px;">* Product saved in Firebase Realtime Database. Visible to everyone!</p>
-    </div>
-
     <div class="search-area">
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search by Code or Name..." autocomplete="off">
@@ -266,7 +293,6 @@
     <div id="resultsContainer"></div>
     <div id="noResults" class="no-results">No items found matching your filter/search.</div>
 
-    <!-- MODAL, SIDEBAR, FOOTER, BACK TO TOP -->
     <div class="expanded-overlay" id="expandedOverlay">
         <div class="expanded-header"><button class="close-btn" onclick="closeCard()">✕</button></div>
         <div class="expanded-scrollable">
@@ -336,6 +362,45 @@
 </div>
 
 <!-- ============================================== -->
+<!-- 🚀 PREMIUM FULL MOBILE WIDTH ADMIN MODAL        -->
+<!-- ============================================== -->
+<div id="adminModalOverlay" onclick="closeAdminModal(event)">
+    <div id="adminModalBox" onclick="event.stopPropagation();">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-plus-circle"></i> Add Product</h3>
+            <button class="modal-close-btn" onclick="closeAdminModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="admin-grid">
+            <input type="text" id="pName" placeholder="Product Name *">
+            <input type="text" id="pCode" placeholder="Code *">
+            <input type="text" id="pPrice" placeholder="Price (e.g. 22,999) *">
+            <select id="pCat">
+                <option value="kitchen">Kitchen</option>
+                <option value="electric">Electric</option>
+                <option value="beauty">Beauty</option>
+            </select>
+            <input type="text" id="pSub" placeholder="Subtitle">
+            <textarea id="pDesc" rows="2" placeholder="Description"></textarea>
+            
+            <!-- 🆕 New Inputs: Rating, Review & Affiliate Link -->
+            <input type="text" id="pRating" placeholder="Rating (e.g. 4.8)">
+            <textarea id="pReview" rows="2" placeholder="Write a review about this product..."></textarea>
+            
+            <input type="text" id="pAffiliate" placeholder="Affiliate Link (Check Out URL)">
+            
+            <div class="img-group-label"><i class="fa-solid fa-image"></i> 1 Thumbnail + 4 Large Images</div>
+            <input type="text" id="pThumb" placeholder="Thumbnail URL (Card Image) *">
+            <input type="text" id="pImg1" placeholder="Large Image 1">
+            <input type="text" id="pImg2" placeholder="Large Image 2">
+            <input type="text" id="pImg3" placeholder="Large Image 3">
+            <input type="text" id="pImg4" placeholder="Large Image 4">
+
+            <button class="admin-submit" onclick="addProduct()"><i class="fa-solid fa-check"></i> Add Product (Global)</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
 <!-- 🚀 FIREBASE SDK + APP LOGIC                    -->
 <!-- ============================================== -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -366,13 +431,22 @@
         let allProducts = []; 
         let currentActiveFilter = 'all';
 
+        // ==============================================
+        // 🔥 3. ADMIN MODAL TOGGLE LOGIC
+        // ==============================================
         document.getElementById('adminToggleBtn').addEventListener('click', function() {
-            const panel = document.getElementById('adminPanel');
-            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+            document.getElementById('adminModalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
 
+        window.closeAdminModal = function(e) {
+            if(e && e.target !== e.currentTarget) return;
+            document.getElementById('adminModalOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
         // ==============================================
-        // 📦 3. DEFAULT PRODUCTS (To seed Firebase if empty)
+        // 📦 4. DEFAULT PRODUCTS (All 6 Old Products with Affiliate Links)
         // ==============================================
         const baseProductsData = [
             { id: 1, code: "HP-2606SDW", name: "HP LaserJet MFP 2606sdw", subtitle: "Print, Scan, Copy • 22 ppm Speed • Auto-Duplex", price: "22,999", rating: "4.0", badgeIcon: "fa-fire", badgeColor: "#e74c3c", category: "electric", img: "https://m.media-amazon.com/images/I/61Tkw06wPDL._SL1500_.jpg", images: ["https://m.media-amazon.com/images/I/51V0H62h5cL._SL1080_.jpg","https://m.media-amazon.com/images/I/51VaMo3izvL._SL1080_.jpg","https://m.media-amazon.com/images/I/81oeMzga-LL._SL1500_.jpg","https://m.media-amazon.com/images/I/51ZBJRKkcEL._SL1080_.jpg","https://m.media-amazon.com/images/I/716Udm5FnvL._SL1500_.jpg"], description: "The HP LaserJet MFP 2606sdw is an exceptional all-in-one printer designed for high productivity. It delivers blazing-fast printing up to 22 pages per minute, seamless wireless connectivity (Bluetooth LE, Wi-Fi, Ethernet), and a 40-sheet Automatic Document Feeder (ADF) for effortless scanning and copying. With a robust 250-sheet input tray, a reliable 1-year warranty, and sharp Black & White output, it is the perfect workhorse for any busy office or home environment.", reviews: [ { name: "Deal Pocket", text: "This printer has been an absolute workhorse for our small office! The 22 ppm speed is incredibly fast, and the wireless connectivity works seamlessly from all our laptops and phones. The auto-duplex feature saves a ton of paper, and the 40-sheet ADF makes scanning multi-page contracts effortless. Highly recommended for anyone looking for a durable and efficient printer." } ], affiliateLink: "https://link.amazon/B0hbH6R50" },
@@ -384,7 +458,7 @@
         ];
 
         // ==============================================
-        // 📥 4. LOAD PRODUCTS FROM FIREBASE (Realtime)
+        // 📥 5. LOAD PRODUCTS & SMART SEEDING (Prevents duplicates)
         // ==============================================
         function loadProducts() {
             db.ref('products').on('value', (snapshot) => {
@@ -392,17 +466,23 @@
                 allProducts = [];
                 
                 if (data) {
-                    // Firebase data is an object, convert to array
+                    // Convert to array
                     Object.keys(data).forEach(key => {
                         allProducts.push({ id: key, ...data[key] });
                     });
-                } else {
-                    // 🚀 FIX: If Firebase is empty, seed it with default products!
+
+                    // 🔥 SMART SEEDING: Check if base products already exist, if not, add them!
+                    const existingCodes = new Set(allProducts.map(p => p.code));
                     baseProductsData.forEach(product => {
-                        // Remove static ID and let Firebase generate its own
+                        if (!existingCodes.has(product.code)) {
+                            db.ref('products').push(product);
+                        }
+                    });
+                } else {
+                    // If completely empty, seed all.
+                    baseProductsData.forEach(product => {
                         db.ref('products').push(product);
                     });
-                    // Return early to let the listener trigger again with the new data
                     return;
                 }
                 applyFilters();
@@ -410,7 +490,7 @@
         }
 
         // ==============================================
-        // 🎨 5. RENDER PRODUCTS
+        // 🎨 6. RENDER PRODUCTS
         // ==============================================
         function renderItems(items) {
             container.innerHTML = '';
@@ -450,7 +530,7 @@
         }
 
         // ==============================================
-        // 🔍 6. FILTER AND SEARCH
+        // 🔍 7. FILTER AND SEARCH
         // ==============================================
         filterButtons.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -483,20 +563,39 @@
         document.getElementById('searchBtn').addEventListener('click', applyFilters);
 
         // ==============================================
-        // 🆕 7. ADD PRODUCT FUNCTION
+        // 🆕 8. ADD PRODUCT FUNCTION (With Affiliate Link)
         // ==============================================
         window.addProduct = function() {
             const name = document.getElementById('pName').value.trim();
             const code = document.getElementById('pCode').value.trim();
             const price = document.getElementById('pPrice').value.trim();
             const category = document.getElementById('pCat').value;
-            const img = document.getElementById('pImg').value.trim();
             const subtitle = document.getElementById('pSub').value.trim();
             const description = document.getElementById('pDesc').value.trim();
+            const rating = document.getElementById('pRating').value.trim();
+            const reviewText = document.getElementById('pReview').value.trim();
+            // 🆕 Read Affiliate Link
+            const affiliateLink = document.getElementById('pAffiliate').value.trim();
 
-            if(!name || !code || !price) {
-                alert('Please fill Name, Code, and Price!');
+            const thumb = document.getElementById('pThumb').value.trim();
+            const img1 = document.getElementById('pImg1').value.trim();
+            const img2 = document.getElementById('pImg2').value.trim();
+            const img3 = document.getElementById('pImg3').value.trim();
+            const img4 = document.getElementById('pImg4').value.trim();
+
+            if(!name || !code || !price || !thumb) {
+                alert('Please fill Name, Code, Price, and Thumbnail URL!');
                 return;
+            }
+
+            const imagesArray = [img1, img2, img3, img4].filter(url => url !== '');
+            if (imagesArray.length === 0) {
+                imagesArray.push(thumb);
+            }
+
+            let reviewsArray = [];
+            if (reviewText) {
+                reviewsArray.push({ name: "Deal Pocket", text: reviewText });
             }
 
             const newProduct = {
@@ -504,23 +603,34 @@
                 code: code,
                 price: price,
                 category: category,
-                img: img || '',
+                img: thumb,
+                images: imagesArray,
                 subtitle: subtitle || 'New Arrival',
                 description: description || 'Great product added via Admin!',
-                rating: "4.8",
+                rating: rating || '4.8',
+                reviews: reviewsArray,
                 badgeIcon: "fa-star", 
-                badgeColor: "#f1c40f"
+                badgeColor: "#f1c40f",
+                affiliateLink: affiliateLink || '#' // 🆕 Saved to Firebase
             };
 
             db.ref('products').push(newProduct)
                 .then(() => {
-                    alert('✅ Product Added Successfully! It is now live for everyone.');
+                    alert('✅ Product Added Successfully!');
                     document.getElementById('pName').value = '';
                     document.getElementById('pCode').value = '';
                     document.getElementById('pPrice').value = '';
-                    document.getElementById('pImg').value = '';
+                    document.getElementById('pThumb').value = '';
+                    document.getElementById('pImg1').value = '';
+                    document.getElementById('pImg2').value = '';
+                    document.getElementById('pImg3').value = '';
+                    document.getElementById('pImg4').value = '';
                     document.getElementById('pSub').value = '';
                     document.getElementById('pDesc').value = '';
+                    document.getElementById('pRating').value = '';
+                    document.getElementById('pReview').value = '';
+                    document.getElementById('pAffiliate').value = ''; // Clear Affiliate field
+                    closeAdminModal();
                 })
                 .catch((error) => {
                     console.error('Error adding product:', error);
@@ -529,7 +639,7 @@
         };
 
         // ==============================================
-        // 🛒 8. CARD CLICK -> MODAL
+        // 🛒 9. CARD CLICK -> MODAL (With Affiliate Link check)
         // ==============================================
         container.addEventListener('click', function(e) {
             const card = e.target.closest('.item-card');
@@ -542,6 +652,8 @@
             document.getElementById('modalPrice').innerText = `₹${item.price}`;
             document.getElementById('modalDesc').innerText = (item.description || 'No description available.') + `\n\nCode: ${item.code}`;
             document.getElementById('modalFooterPrice').innerText = `₹${item.price}`;
+            
+            // 🔗 Wire the affiliate link to the Check Out button
             document.getElementById('modalActionBtn').href = item.affiliateLink || '#';
 
             const track = document.getElementById('modalSliderTrack');
@@ -555,6 +667,20 @@
                 slide.innerHTML = `<img src="${imgUrl}" onerror="this.src='https://via.placeholder.com/600x600?text=Image'">`;
                 track.appendChild(slide);
             });
+
+            const revContainer = document.getElementById('modalReviewsContainer');
+            revContainer.innerHTML = '';
+            if(item.reviews && item.reviews.length > 0) {
+                [...item.reviews].reverse().forEach(rev => {
+                    const div = document.createElement('div'); div.className = 'review-item';
+                    const initial = rev.name.charAt(0).toUpperCase();
+                    div.innerHTML = `<div class="review-avatar">${initial}</div><div class="review-body"><div class="review-name">${rev.name} <span class="badge">About Product</span></div><p class="review-text">${rev.text}</p></div>`;
+                    revContainer.appendChild(div);
+                });
+            } else {
+                revContainer.innerHTML = `<p style="color: #999; font-size: 14px; padding: 5px 0 15px 0;">No reviews yet.</p>`;
+            }
+
             document.getElementById('expandedOverlay').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });
@@ -565,7 +691,7 @@
         };
 
         // ==============================================
-        // 🚀 9. INITIALIZE AND EXISTING FEATURES
+        // 🚀 10. INITIALIZE AND EXISTING FEATURES
         // ==============================================
         loadProducts();
 
@@ -577,7 +703,6 @@
             if (sidebar.classList.contains('active')) { document.body.style.overflow = 'hidden'; } else { document.body.style.overflow = 'auto'; }
         };
 
-        // Banner Slider
         const bannerTrack = document.getElementById('bannerTrack'); 
         const bannerDots = document.getElementById('bannerDots');
         const bannerSlides = bannerTrack.querySelectorAll('.banner-slide'); 
@@ -594,7 +719,6 @@
         function nextBannerSlide() { currentBannerSlide = (currentBannerSlide + 1) % totalBannerSlides; goToBannerSlide(currentBannerSlide); }
         let bannerInterval = setInterval(nextBannerSlide, 5000);
 
-        // Contact Form
         const contactForm = document.getElementById('contactForm');
         if (contactForm) {
             contactForm.addEventListener('submit', async function(e) {
@@ -618,19 +742,16 @@
             });
         }
 
-        // Back to Top
         const backToTopBtn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) { backToTopBtn.classList.add('show'); } else { backToTopBtn.classList.remove('show'); }
         });
         window.scrollToTop = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-        // Avatar Vibration
         const avatarIcon = document.getElementById('avatarIcon');
         setInterval(() => { avatarIcon.classList.remove('vibrate'); void avatarIcon.offsetWidth; avatarIcon.classList.add('vibrate'); }, 5000);
         avatarIcon.addEventListener('animationend', () => { avatarIcon.classList.remove('vibrate'); });
 
-        // Cart Icon Click
         const cartIconWrapper = document.getElementById('cartIcon');
         if (cartIconWrapper) {
             cartIconWrapper.addEventListener('click', function(e) {
@@ -647,7 +768,6 @@
             });
         }
 
-        // Popups
         const popupMessages = [
             { title: "Arey Wah!", message: "Aap aa hi gaye ho, toh ek baar 'Check Out' toh kar ke dekho! 😂", icon: "fa-smile-wink", iconColor: "#f39c12" },
             { title: "Aaj Mood Off?", message: "Deal Pocket ka checkout mood on kar dega! Kuch toh kharido! 🛍️", icon: "fa-cart-shopping", iconColor: "#e67e22" },
