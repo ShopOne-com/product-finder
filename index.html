@@ -40,100 +40,42 @@
         .header-icons .icon-box .fa-gear { color: #9b59b6; }
 
         /* ============================================== */
-        /* 🔥 SPACIOUS & PREMIUM ADMIN MODAL             */
+        /* 🔥 ADMIN SIDEBAR (Same as Navigation Menu)    */
         /* ============================================== */
-        #adminModalOverlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
-            z-index: 99999; display: none; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease;
-            padding: 15px;
-        }
-        #adminModalOverlay.active {
-            display: flex; opacity: 1;
-        }
-        #adminModalBox {
-            background: #FFFFFF; width: 95%; max-width: 500px; /* Spacious and premium */
-            border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-            padding: 25px 20px; position: relative; max-height: 88vh; overflow-y: auto;
-            transform: scale(0.95) translateY(20px); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #adminModalOverlay.active #adminModalBox {
-            transform: scale(1) translateY(0);
-        }
-        #adminModalBox::-webkit-scrollbar { width: 5px; }
-        #adminModalBox::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        #adminModalBox::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-
-        .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 12px;
-        }
-        .modal-header h3 { font-size: 20px; color: var(--dark-green); display: flex; align-items: center; gap: 8px; }
-        .modal-close-btn {
-            background: #f0f0f0; border: none; font-size: 18px; cursor: pointer; color: #555;
-            transition: 0.2s; width: 34px; height: 34px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .modal-close-btn:hover { background: #e0e0e0; transform: rotate(90deg); }
+        #adminSidebarOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 9998; display: none; opacity: 0; transition: all 0.4s ease-out; }
+        #adminSidebarOverlay.active { display: block; opacity: 1; }
         
+        #adminSidebar { position: fixed; top: 0; left: -100%; width: 100%; max-width: 100%; height: 100vh; background: var(--modal-bg); z-index: 9999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1); padding: 25px; box-shadow: 5px 0 20px rgba(0,0,0,0.03); display: flex; flex-direction: column; border-right: 1px solid rgba(15, 157, 88, 0.08); overflow-y: auto; }
+        #adminSidebar.active { left: 0; }
+        .admin-sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 12px; border-bottom: 1px solid rgba(15, 157, 88, 0.08); }
+        .admin-sidebar-header h3 { font-size: 20px; color: var(--text-main); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .admin-sidebar-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-gray); transition: 0.2s; }
+        .admin-sidebar-close:hover { transform: rotate(90deg); color: var(--text-main); }
+
         .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .admin-grid input, .admin-grid select, .admin-grid textarea {
-            width: 100%; padding: 12px 14px; border: 1px solid #e0e0e0;
-            border-radius: 12px; font-size: 14px; outline: none; transition: 0.2s;
-            background: #fafafa;
-        }
-        .admin-grid input:focus, .admin-grid select:focus, .admin-grid textarea:focus {
-            border-color: var(--dark-green); box-shadow: 0 0 0 3px rgba(15, 157, 88, 0.1); background: #fff;
-        }
+        .admin-grid input, .admin-grid select, .admin-grid textarea { width: 100%; padding: 12px 14px; border: 1px solid #e0e0e0; border-radius: 12px; font-size: 14px; outline: none; transition: 0.2s; background: #fafafa; }
+        .admin-grid input:focus, .admin-grid select:focus, .admin-grid textarea:focus { border-color: var(--dark-green); box-shadow: 0 0 0 3px rgba(15, 157, 88, 0.1); background: #fff; }
         .admin-grid textarea { grid-column: span 2; resize: vertical; min-height: 60px; }
         .img-group-label { grid-column: span 2; font-size: 13px; font-weight: 600; color: var(--dark-green); margin-top: 5px; border-top: 1px solid #eee; padding-top: 12px; }
         
-        /* 🖼️ 5 ICON UPLOAD SYSTEM (No Text Inputs) */
-        .upload-icons-row {
-            grid-column: span 2; display: flex; gap: 10px; flex-wrap: wrap;
-            justify-content: center; padding: 5px 0;
-        }
+        /* 🖼️ 5 ICON UPLOAD SYSTEM */
+        .upload-icons-row { grid-column: span 2; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; padding: 5px 0; }
         @media (max-width: 480px) { .upload-icons-row { gap: 8px; } }
         
-        .upload-icon-box {
-            width: 65px; height: 65px; border-radius: 16px;
-            border: 2px dashed #d0d0d0; background: #fcfcfc;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s ease; position: relative;
-        }
+        .upload-icon-box { width: 65px; height: 65px; border-radius: 16px; border: 2px dashed #d0d0d0; background: #fcfcfc; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; position: relative; }
         .upload-icon-box:active { transform: scale(0.92); }
         .upload-icon-box:hover { border-color: var(--dark-green); background: #f0faf5; }
         .upload-icon-box i { font-size: 24px; color: var(--dark-green); margin-bottom: 2px; }
         .upload-icon-box span { font-size: 10px; color: var(--text-gray); font-weight: 500; }
-        .upload-icon-box .preview-img {
-            position: absolute; top:0; left:0; width:100%; height:100%;
-            object-fit: cover; border-radius: 14px; display: none;
-            border: 2px solid var(--dark-green);
-        }
+        .upload-icon-box .preview-img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; border-radius: 14px; display: none; border: 2px solid var(--dark-green); }
         
-        .admin-submit {
-            grid-column: span 2; background: var(--dark-green); color: white;
-            padding: 16px; border: none; border-radius: 16px; font-weight: 700;
-            font-size: 18px; cursor: pointer; width: 100%;
-            box-shadow: 0 4px 15px rgba(15, 157, 88, 0.3); transition: 0.2s;
-        }
+        .admin-submit { grid-column: span 2; background: var(--dark-green); color: white; padding: 16px; border: none; border-radius: 16px; font-weight: 700; font-size: 18px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(15, 157, 88, 0.3); transition: 0.2s; }
         .admin-submit:active { transform: scale(0.95); }
 
-        /* 🛍️ BEAUTIFUL MODAL FOOTER */
-        .modal-footer {
-            grid-column: span 2; text-align: center; padding-top: 18px;
-            margin-top: 10px; border-top: 1px solid #eee;
-            color: var(--text-gray); font-size: 14px; font-weight: 500;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-        }
-        .modal-footer i { color: var(--dark-green); font-size: 18px; }
-
-        @media (max-width: 480px) {
-            .admin-grid { grid-template-columns: 1fr; }
-            .admin-grid textarea, .img-group-label, .admin-submit, .modal-footer, .upload-icons-row { grid-column: span 1; }
-            .upload-icon-box { width: 58px; height: 58px; }
-        }
+        /* 🛍️ BEAUTIFUL FOOTER */
+        .admin-footer { grid-column: span 2; text-align: center; padding-top: 18px; margin-top: 10px; border-top: 1px solid #eee; color: var(--text-gray); font-size: 14px; font-weight: 500; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .admin-footer i { color: var(--dark-green); font-size: 18px; }
+        @media (max-width: 480px) { .admin-grid { grid-template-columns: 1fr; } .admin-grid textarea, .img-group-label, .admin-submit, .admin-footer, .upload-icons-row { grid-column: span 1; } .upload-icon-box { width: 58px; height: 58px; } }
 
         /* ============================================== */
         /* 🛒 SEARCH & CATEGORIES                        */
@@ -159,13 +101,20 @@
         .banner-dots .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; transition: 0.3s; }
         .banner-dots .dot.active { background: #ffffff; width: 16px; border-radius: 10px; }
 
+        /* 🎨 CATEGORY ICONS WITH COLORS */
         .categories { display: flex; gap: 8px; margin-bottom: 25px; flex-wrap: nowrap; overflow-x: auto; }
         .categories::-webkit-scrollbar { display: none; }
         .cat-item { flex: 1; min-width: 65px; background: var(--bg-color); padding: 10px 5px; border-radius: 2px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 500; color: var(--text-main); box-shadow: 0 2px 10px rgba(0,0,0,0.02); cursor: pointer; transition: 0.2s; white-space: nowrap; border: 1px solid rgba(0,0,0,0.02); }
-        .cat-item i { font-size: 18px; color: var(--text-gray); transition: 0.2s; }
+        .cat-item i { font-size: 18px; transition: 0.2s; }
         .cat-item:active { transform: scale(0.95); }
         .cat-item.active { background: var(--dark-green); color: white; box-shadow: 0 4px 20px rgba(15, 157, 88, 0.3); border: none; }
         .cat-item.active i { color: white; }
+        
+        /* Individual Category Icon Colors */
+        .cat-item[data-filter="all"] i { color: #1abc9c; }
+        .cat-item[data-filter="kitchen"] i { color: #e67e22; }
+        .cat-item[data-filter="electric"] i { color: #f39c12; }
+        .cat-item[data-filter="beauty"] i { color: #9b59b6; }
 
         .section-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
         .section-header h3 { font-size: 16px; }
@@ -280,6 +229,7 @@
             </div>
         </div>
         <div class="header-icons">
+            <!-- ⚙️ Admin Sidebar Toggle -->
             <div class="icon-box" id="adminToggleBtn"><i class="fa-solid fa-gear"></i></div>
             <div class="icon-box" id="cartIcon"><i class="fa-solid fa-shopping-cart"></i></div>
             <div class="icon-box" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
@@ -324,6 +274,7 @@
         <div class="banner-dots" id="bannerDots"></div>
     </div>
 
+    <!-- 🎨 COLORED CATEGORY ICONS -->
     <div class="categories" id="categoryFilters">
         <div class="cat-item active" data-filter="all"><i class="fa-solid fa-th-large"></i> All</div>
         <div class="cat-item" data-filter="kitchen"><i class="fa-solid fa-utensils"></i> Kitchen</div>
@@ -408,82 +359,72 @@
 </div>
 
 <!-- ============================================== -->
-<!-- 🚀 NEW 5-ICON UPLOAD ADMIN MODAL                -->
+<!-- 🚀 NEW ADMIN SIDEBAR (Sliding like Navigation)  -->
 <!-- ============================================== -->
-<div id="adminModalOverlay" onclick="closeAdminModal(event)">
-    <div id="adminModalBox" onclick="event.stopPropagation();">
-        <div class="modal-header">
-            <h3><i class="fa-solid fa-plus-circle"></i> Add Product</h3>
-            <button class="modal-close-btn" onclick="closeAdminModal()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
+<div id="adminSidebarOverlay" onclick="toggleAdminSidebar()"></div>
+<div id="adminSidebar">
+    <div class="admin-sidebar-header">
+        <h3><i class="fa-solid fa-gear" style="color: #9b59b6; margin-right: 8px;"></i> Admin Panel</h3>
+        <button class="admin-sidebar-close" onclick="toggleAdminSidebar()">✕</button>
+    </div>
+    
+    <div class="admin-grid">
+        <input type="text" id="pName" placeholder="Product Name *">
+        <input type="text" id="pCode" placeholder="Code *">
+        <input type="text" id="pPrice" placeholder="Price (e.g. 84,090) *">
+        <select id="pCat">
+            <option value="kitchen">Kitchen</option>
+            <option value="electric">Electric</option>
+            <option value="beauty">Beauty</option>
+        </select>
+        <input type="text" id="pSub" placeholder="Subtitle (e.g. Intel Core i5, 16GB RAM)">
+        <textarea id="pDesc" rows="3" placeholder="Product Description *"></textarea>
         
-        <div class="admin-grid">
-            <!-- Basic Details -->
-            <input type="text" id="pName" placeholder="Product Name *">
-            <input type="text" id="pCode" placeholder="Code *">
-            <input type="text" id="pPrice" placeholder="Price (e.g. 84,090) *">
-            <select id="pCat">
-                <option value="kitchen">Kitchen</option>
-                <option value="electric">Electric</option>
-                <option value="beauty">Beauty</option>
-            </select>
-            <input type="text" id="pSub" placeholder="Subtitle (e.g. Intel Core i5, 16GB RAM)">
-            <textarea id="pDesc" rows="3" placeholder="Product Description *"></textarea>
-            
-            <!-- Rating, Review & Affiliate (Kept as per request) -->
-            <input type="text" id="pRating" placeholder="Rating (e.g. 4.8)">
-            <textarea id="pReview" rows="2" placeholder="Write a review about this product..."></textarea>
-            <input type="text" id="pAffiliate" placeholder="Affiliate Link (Checkout URL) *">
-            
-            <!-- 🖼️ 5 ICON UPLOAD SYSTEM (No Text Inputs) -->
-            <div class="img-group-label"><i class="fa-solid fa-image"></i> Upload Images (1 Thumb + 4 Large)</div>
-            <div class="upload-icons-row" id="imgUploadRow">
-                <!-- Thumbnail -->
-                <div class="upload-icon-box" onclick="document.getElementById('fileInputThumb').click()">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <span>Thumb</span>
-                    <img id="previewThumb" class="preview-img" style="display:none;" />
-                    <input type="file" id="fileInputThumb" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewThumb', 'thumbData')">
-                </div>
-                <!-- Large 1 -->
-                <div class="upload-icon-box" onclick="document.getElementById('fileInputImg1').click()">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <span>Img 1</span>
-                    <img id="previewImg1" class="preview-img" style="display:none;" />
-                    <input type="file" id="fileInputImg1" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg1', 'imgData1')">
-                </div>
-                <!-- Large 2 -->
-                <div class="upload-icon-box" onclick="document.getElementById('fileInputImg2').click()">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <span>Img 2</span>
-                    <img id="previewImg2" class="preview-img" style="display:none;" />
-                    <input type="file" id="fileInputImg2" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg2', 'imgData2')">
-                </div>
-                <!-- Large 3 -->
-                <div class="upload-icon-box" onclick="document.getElementById('fileInputImg3').click()">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <span>Img 3</span>
-                    <img id="previewImg3" class="preview-img" style="display:none;" />
-                    <input type="file" id="fileInputImg3" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg3', 'imgData3')">
-                </div>
-                <!-- Large 4 -->
-                <div class="upload-icon-box" onclick="document.getElementById('fileInputImg4').click()">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <span>Img 4</span>
-                    <img id="previewImg4" class="preview-img" style="display:none;" />
-                    <input type="file" id="fileInputImg4" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg4', 'imgData4')">
-                </div>
+        <input type="text" id="pRating" placeholder="Rating (e.g. 4.8)">
+        <textarea id="pReview" rows="2" placeholder="Write a review about this product..."></textarea>
+        <input type="text" id="pAffiliate" placeholder="Affiliate Link (Checkout URL) *">
+        
+        <!-- 🖼️ 5 ICON UPLOAD SYSTEM -->
+        <div class="img-group-label"><i class="fa-solid fa-image"></i> Upload Images (1 Thumb + 4 Large)</div>
+        <div class="upload-icons-row" id="imgUploadRow">
+            <div class="upload-icon-box" onclick="document.getElementById('fileInputThumb').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Thumb</span>
+                <img id="previewThumb" class="preview-img" style="display:none;" />
+                <input type="file" id="fileInputThumb" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewThumb', 'thumbData')">
             </div>
-
-            <!-- ⚡ Publish Button -->
-            <button class="admin-submit" onclick="addProduct()">
-                <i class="fa-solid fa-check-circle"></i> Publish Product
-            </button>
-
-            <!-- 🛍️ BEAUTIFUL FOOTER -->
-            <div class="modal-footer">
-                <i class="fa-solid fa-box-open"></i> Amazon Product Home
+            <div class="upload-icon-box" onclick="document.getElementById('fileInputImg1').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Img 1</span>
+                <img id="previewImg1" class="preview-img" style="display:none;" />
+                <input type="file" id="fileInputImg1" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg1', 'imgData1')">
             </div>
+            <div class="upload-icon-box" onclick="document.getElementById('fileInputImg2').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Img 2</span>
+                <img id="previewImg2" class="preview-img" style="display:none;" />
+                <input type="file" id="fileInputImg2" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg2', 'imgData2')">
+            </div>
+            <div class="upload-icon-box" onclick="document.getElementById('fileInputImg3').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Img 3</span>
+                <img id="previewImg3" class="preview-img" style="display:none;" />
+                <input type="file" id="fileInputImg3" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg3', 'imgData3')">
+            </div>
+            <div class="upload-icon-box" onclick="document.getElementById('fileInputImg4').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Img 4</span>
+                <img id="previewImg4" class="preview-img" style="display:none;" />
+                <input type="file" id="fileInputImg4" accept="image/*" style="display:none;" onchange="handleUpload(this, 'previewImg4', 'imgData4')">
+            </div>
+        </div>
+
+        <button class="admin-submit" onclick="addProduct()">
+            <i class="fa-solid fa-check-circle"></i> Publish Product
+        </button>
+
+        <div class="admin-footer">
+            <i class="fa-solid fa-box-open"></i> Amazon Product Home
         </div>
     </div>
 </div>
@@ -520,23 +461,27 @@
         let currentActiveFilter = 'all';
 
         // ==============================================
-        // 🔥 3. ADMIN MODAL TOGGLE LOGIC
+        // 🔥 3. ADMIN SIDEBAR TOGGLE LOGIC
         // ==============================================
         document.getElementById('adminToggleBtn').addEventListener('click', function() {
-            document.getElementById('adminModalOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            toggleAdminSidebar();
         });
 
-        window.closeAdminModal = function(e) {
-            if(e && e.target !== e.currentTarget) return;
-            document.getElementById('adminModalOverlay').classList.remove('active');
-            document.body.style.overflow = 'auto';
+        window.toggleAdminSidebar = function() {
+            const sidebar = document.getElementById('adminSidebar');
+            const overlay = document.getElementById('adminSidebarOverlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         };
 
         // ==============================================
         // 📤 4. IMAGE UPLOAD HANDLER (No Text Inputs)
         // ==============================================
-        // Global variables to store Base64 strings
         let thumbData = '', imgData1 = '', imgData2 = '', imgData3 = '', imgData4 = '';
 
         window.handleUpload = function(input, previewId, dataVar) {
@@ -548,18 +493,15 @@
             }
             const reader = new FileReader();
             reader.onload = function(e) {
-                // Store in variables
                 if (dataVar === 'thumbData') thumbData = e.target.result;
                 else if (dataVar === 'imgData1') imgData1 = e.target.result;
                 else if (dataVar === 'imgData2') imgData2 = e.target.result;
                 else if (dataVar === 'imgData3') imgData3 = e.target.result;
                 else if (dataVar === 'imgData4') imgData4 = e.target.result;
 
-                // Show preview inside the box
                 const previewImg = document.getElementById(previewId);
                 previewImg.src = e.target.result;
                 previewImg.style.display = 'block';
-                // Hide the icon and text inside this specific box
                 const parentBox = previewImg.parentElement;
                 const icon = parentBox.querySelector('i');
                 const span = parentBox.querySelector('span');
@@ -570,19 +512,7 @@
         };
 
         // ==============================================
-        // 📦 5. DEFAULT PRODUCTS (All 6 Old Products with Affiliate Links)
-        // ==============================================
-        const baseProductsData = [
-            { id: 1, code: "HP-2606SDW", name: "HP LaserJet MFP 2606sdw", subtitle: "Print, Scan, Copy • 22 ppm Speed • Auto-Duplex", price: "22,999", rating: "4.0", badgeIcon: "fa-fire", badgeColor: "#e74c3c", category: "electric", img: "https://m.media-amazon.com/images/I/61Tkw06wPDL._SL1500_.jpg", images: ["https://m.media-amazon.com/images/I/51V0H62h5cL._SL1080_.jpg","https://m.media-amazon.com/images/I/51VaMo3izvL._SL1080_.jpg","https://m.media-amazon.com/images/I/81oeMzga-LL._SL1500_.jpg","https://m.media-amazon.com/images/I/51ZBJRKkcEL._SL1080_.jpg","https://m.media-amazon.com/images/I/716Udm5FnvL._SL1500_.jpg"], description: "The HP LaserJet MFP 2606sdw is an exceptional all-in-one printer designed for high productivity. It delivers blazing-fast printing up to 22 pages per minute, seamless wireless connectivity (Bluetooth LE, Wi-Fi, Ethernet), and a 40-sheet Automatic Document Feeder (ADF) for effortless scanning and copying. With a robust 250-sheet input tray, a reliable 1-year warranty, and sharp Black & White output, it is the perfect workhorse for any busy office or home environment.", reviews: [ { name: "Deal Pocket", text: "This printer has been an absolute workhorse for our small office! The 22 ppm speed is incredibly fast, and the wireless connectivity works seamlessly from all our laptops and phones. The auto-duplex feature saves a ton of paper, and the 40-sheet ADF makes scanning multi-page contracts effortless. Highly recommended for anyone looking for a durable and efficient printer." } ], affiliateLink: "https://link.amazon/B0hbH6R50" },
-            { id: 2, code: "REP-7000", name: "Repechage Vita Cura Firming Cream", subtitle: "Anti-Aging, Fine Lines & Wrinkle • 30ml", price: "7,000", rating: "4.4", badgeIcon: "fa-star", badgeColor: "#f39c12", category: "beauty", img: "https://m.media-amazon.com/images/I/81svwYq3L2L._SL1500_.jpg", images: ["https://m.media-amazon.com/images/I/7159YLpmO4L._SL1500_.jpg","https://m.media-amazon.com/images/I/91H1KJx-m7L._SL1500_.jpg","https://m.media-amazon.com/images/I/811klMWnTnL._SL1500_.jpg","https://m.media-amazon.com/images/I/51QbfYKXJgL._SL1194_.jpg"], description: "The Repechage Vita Cura Firming Cream is a triple-action anti-aging powerhouse. Its unique peptide-rich blend actively firms and lifts sagging skin while diminishing the appearance of fine lines and wrinkles. Intense hydration restores a healthy, supple texture, and its lightweight, non-greasy formula absorbs quickly, making it the perfect base for your daily makeup routine. Suitable for the face, neck, and throat area.", reviews: [ { name: "Deal Pocket", text: "I've been using the Repechage Vita Cura cream morning and night for a few weeks now, and I can already see a noticeable difference in my skin's firmness. It deeply moisturizes without feeling heavy or oily, and my fine lines look significantly softer. It sits beautifully under makeup and leaves my skin with a healthy, radiant glow. Highly recommend for anyone looking to add a premium anti-aging step to their routine!" } ], affiliateLink: "https://link.amazon/B0b18jszL" },
-            { id: 3, code: "REP-BIO-11800", name: "Repechage Biolight Brightening Overnight Cream", subtitle: "Targets Dark Spots & Uneven Tone • 50ml", price: "11,800", rating: "4.2", category: "beauty", img: "https://m.media-amazon.com/images/I/410kbjb7ZgL._SL1000_.jpg", images: ["https://m.media-amazon.com/images/I/510L-+8AfIL._SL1000_.jpg","https://m.media-amazon.com/images/I/410kbjb7ZgL._SL1000_.jpg","https://m.media-amazon.com/images/I/611IVTCyNZL._SL1000_.jpg","https://m.media-amazon.com/images/I/61DEZCIFOKL._SL1000_.jpg"], description: "Wake up to visibly brighter, healthier-looking skin with the Repechage Biolight Brightening Overnight Cream. This luxurious night cream is specially formulated with a marine-based seaweed complex, hyaluronic acid, and licorice extract. It works effortlessly overnight to target dark spots, hyperpigmentation, and uneven skin tone. By morning, your complexion feels incredibly hydrated, smooth, and boasts a luminous, even glow. Its lightweight, non-greasy formula makes it the perfect final step in your nightly skincare routine.", reviews: [ { name: "Deal Pocket", text: "I am absolutely in love with this overnight cream! After just a couple of weeks of consistent use, my dark spots have visibly faded, and my overall skin tone is much more even and bright. It feels incredibly hydrating but never heavy or sticky on my skin. I wake up every morning with a fresh, glowing complexion. This is a real game-changer for anyone struggling with hyperpigmentation!" } ], affiliateLink: "https://link.amazon/B0akK4jL7" },
-            { id: 4, code: "HP-OMNIBOOK", name: "HP OmniBook 7 OLED Laptop", subtitle: "Intel Core Ultra 5 • 16GB RAM • 1TB SSD • 14'' OLED", price: "1,03,490", rating: "3.5", badgeIcon: "fa-bolt", badgeColor: "#f39c12", category: "electric", img: "https://m.media-amazon.com/images/I/71mS3HuUn1L._SL1500_.jpg", images: ["https://m.media-amazon.com/images/I/81Az6-OJRnL._SL1500_.jpg","https://m.media-amazon.com/images/I/81fFw6xIN3L._SL1500_.jpg","https://m.media-amazon.com/images/I/71rXghp3U9L._SL1500_.jpg","https://m.media-amazon.com/images/I/81w5FrjPflL._SL1500_.jpg"], description: "The HP OmniBook 7 OLED (formerly Pavilion Plus) is a powerhouse laptop designed for creators and professionals. It features a stunning 14-inch OLED display with incredible color accuracy and deep blacks, perfect for creative work. Powered by an Intel Core Ultra 5 processor, 16GB LPDDR5 RAM, and a massive 1TB SSD, it handles multitasking and heavy files with absolute ease. Pre-loaded with Windows 11 and Microsoft Office 2024, it offers a complete productivity package in a sleek, lightweight (1.5kg) Meteor Silver chassis.", reviews: [ { name: "Deal Pocket", text: "As a creative professional, this laptop has exceeded my expectations! The OLED screen offers incredibly vibrant colors and deep blacks, perfect for photo editing. The performance is snappy, opening heavy files instantly thanks to the 16GB RAM and 1TB SSD. It stays cool and quiet during heavy usage, and the sleek Meteor Silver finish gives it a premium, modern look and feel on the go." } ], affiliateLink: "https://link.amazon/B06Yw3RMr" },
-            { id: 5, code: "LEN-IP3-I7", name: "Lenovo IdeaPad Slim 3 (i7, 16GB, 512GB)", subtitle: "13th Gen Intel i7 • 16GB RAM • 512GB SSD • 15.3'' WUXGA", price: "77,990", rating: "4.5", category: "electric", img: "https://m.media-amazon.com/images/I/71K-77wHn2L._SL1500_.jpg", images: ["https://m.media-amazon.com/images/I/71LgDJBjeXL._SL1500_.jpg","https://m.media-amazon.com/images/I/7186lmhAywL._SL1500_.jpg","https://m.media-amazon.com/images/I/710IkDMfkUL._SL1500_.jpg","https://m.media-amazon.com/images/I/61uGji4cxOL._SL1080_.jpg"], description: "The Lenovo IdeaPad Slim 3 is a powerhouse ultrabook designed for professionals and students alike. Equipped with a 13th Gen Intel Core i7 processor and 16GB of RAM, it effortlessly handles heavy multitasking, complex spreadsheets, and everyday productivity. The 15.3-inch WUXGA IPS display delivers sharp, bright visuals, and the 512GB SSD ensures lightning-fast boot times and ample storage for all your files. Weighing just 1.6kg and featuring a premium Metal Cover Grey finish with a backlit keyboard, it is the perfect blend of portability, performance, and style.", reviews: [ { name: "Deal Pocket", text: "I've been using the IdeaPad Slim 3 for my daily work and coding, and it's absolutely fantastic! The performance from the i7 processor is blazing fast, and the 16GB of RAM makes running dozens of tabs and heavy software a breeze. The 512GB SSD is incredibly quick, and the 15.3-inch screen is vibrant and sharp. It's lightweight enough to carry everywhere, yet feels incredibly premium and robust. Highly recommended for anyone seeking a powerful, versatile laptop!" } ], affiliateLink: "https://link.amazon/B06qGHHEp" },
-            { id: 6, code: "KITCH-001", name: "Premium Non-Stick Cookware Set", subtitle: "5-Piece Set • Induction Base • Durable", price: "4,999", rating: "4.8", badgeIcon: "fa-utensils", badgeColor: "#e67e22", category: "kitchen", img: "https://m.media-amazon.com/images/I/81sS3sM5wSL._SL1500_.jpg", images: ["https://m.media-amazon.com/images/I/81sS3sM5wSL._SL1500_.jpg","https://m.media-amazon.com/images/I/71j3C1xQ3RL._SL1500_.jpg","https://m.media-amazon.com/images/I/61H5X2yK4PL._SL1200_.jpg","https://m.media-amazon.com/images/I/71yS3yX4wTL._SL1500_.jpg"], description: "Upgrade your kitchen with this 5-piece premium non-stick cookware set. Featuring induction-compatible bases, scratch-resistant coating, and cool-touch handles, this set includes a frying pan, saucepan, casserole, and two lids. Perfect for everyday cooking and easy to clean. Enjoy healthy, low-oil meals with even heat distribution.", reviews: [ { name: "Deal Pocket", text: "This cookware set is absolutely fantastic! The non-stick coating is top-notch, and everything cooks evenly. Cleaning is a breeze—just a quick wipe and it's spotless. The induction base works perfectly on my stove. Highly recommended for anyone looking to upgrade their kitchen tools!" } ], affiliateLink: "https://link.amazon/B0kitchen001" }
-        ];
-
-        // ==============================================
-        // 📥 6. LOAD PRODUCTS & SMART SEEDING (Prevents duplicates)
+        // 📥 5. LOAD PRODUCTS (NO SEEDING, NO OLD CARDS)
         // ==============================================
         function loadProducts() {
             db.ref('products').on('value', (snapshot) => {
@@ -593,25 +523,13 @@
                     Object.keys(data).forEach(key => {
                         allProducts.push({ id: key, ...data[key] });
                     });
-
-                    const existingCodes = new Set(allProducts.map(p => p.code));
-                    baseProductsData.forEach(product => {
-                        if (!existingCodes.has(product.code)) {
-                            db.ref('products').push(product);
-                        }
-                    });
-                } else {
-                    baseProductsData.forEach(product => {
-                        db.ref('products').push(product);
-                    });
-                    return;
                 }
                 applyFilters();
             });
         }
 
         // ==============================================
-        // 🎨 7. RENDER PRODUCTS
+        // 🎨 6. RENDER PRODUCTS
         // ==============================================
         function renderItems(items) {
             container.innerHTML = '';
@@ -651,7 +569,7 @@
         }
 
         // ==============================================
-        // 🔍 8. FILTER AND SEARCH
+        // 🔍 7. FILTER AND SEARCH
         // ==============================================
         filterButtons.forEach(btn => {
             btn.addEventListener('click', function() {
@@ -684,7 +602,7 @@
         document.getElementById('searchBtn').addEventListener('click', applyFilters);
 
         // ==============================================
-        // 🆕 9. ADD PRODUCT FUNCTION (Using global variables)
+        // 🆕 8. ADD PRODUCT FUNCTION (Using global variables)
         // ==============================================
         window.addProduct = function() {
             const name = document.getElementById('pName').value.trim();
@@ -697,7 +615,6 @@
             const reviewText = document.getElementById('pReview').value.trim();
             const affiliateLink = document.getElementById('pAffiliate').value.trim();
 
-            // 🔥 Get images from global variables (No text inputs!)
             const thumb = thumbData;
             const img1 = imgData1;
             const img2 = imgData2;
@@ -738,7 +655,7 @@
             db.ref('products').push(newProduct)
                 .then(() => {
                     alert('✅ Product Added Successfully! It is now live for everyone.');
-                    // Clear all inputs and global vars
+                    // Clear all inputs
                     document.getElementById('pName').value = '';
                     document.getElementById('pCode').value = '';
                     document.getElementById('pPrice').value = '';
@@ -748,10 +665,8 @@
                     document.getElementById('pReview').value = '';
                     document.getElementById('pAffiliate').value = '';
                     
-                    // Reset image globals
                     thumbData = ''; imgData1 = ''; imgData2 = ''; imgData3 = ''; imgData4 = '';
                     
-                    // Reset UI for icons
                     const previews = document.querySelectorAll('.preview-img');
                     previews.forEach(el => {
                         el.style.display = 'none';
@@ -763,7 +678,7 @@
                         if(span) span.style.display = 'block';
                     });
 
-                    closeAdminModal();
+                    toggleAdminSidebar();
                 })
                 .catch((error) => {
                     console.error('Error adding product:', error);
@@ -772,7 +687,7 @@
         };
 
         // ==============================================
-        // 🛒 10. CARD CLICK -> EXPANDED MODAL
+        // 🛒 9. CARD CLICK -> EXPANDED MODAL
         // ==============================================
         container.addEventListener('click', function(e) {
             const card = e.target.closest('.item-card');
@@ -792,6 +707,7 @@
             track.innerHTML = '';
             dotsContainer.innerHTML = '';
             
+            // 🔥 FIX: Ensure images array is properly loaded and displayed
             const images = item.images || [item.img || ''];
             images.forEach((imgUrl, index) => {
                 const slide = document.createElement('div'); slide.className = 'slide';
@@ -822,7 +738,7 @@
         };
 
         // ==============================================
-        // 🚀 11. INITIALIZE AND EXISTING FEATURES
+        // 🚀 10. INITIALIZE AND EXISTING FEATURES
         // ==============================================
         loadProducts();
 
