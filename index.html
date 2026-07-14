@@ -69,8 +69,9 @@
         .upload-icon-box span { font-size: 10px; color: var(--text-gray); font-weight: 500; }
         .upload-icon-box .preview-img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; border-radius: 14px; display: none; border: 2px solid var(--dark-green); }
         
-        .admin-submit { grid-column: span 2; background: var(--dark-green); color: white; padding: 16px; border: none; border-radius: 16px; font-weight: 700; font-size: 18px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(15, 157, 88, 0.3); transition: 0.2s; }
+        .admin-submit { grid-column: span 2; background: var(--dark-green); color: white; padding: 16px; border: none; border-radius: 16px; font-weight: 700; font-size: 18px; cursor: pointer; width: 100%; box-shadow: 0 4px 15px rgba(15, 157, 88, 0.3); transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
         .admin-submit:active { transform: scale(0.95); }
+        .admin-submit:disabled { opacity: 0.7; cursor: not-allowed; }
 
         /* 🛍️ BEAUTIFUL FOOTER */
         .admin-footer { grid-column: span 2; text-align: center; padding-top: 18px; margin-top: 10px; border-top: 1px solid #eee; color: var(--text-gray); font-size: 14px; font-weight: 500; display: flex; justify-content: center; align-items: center; gap: 8px; }
@@ -419,7 +420,7 @@
             </div>
         </div>
 
-        <button class="admin-submit" onclick="addProduct()">
+        <button class="admin-submit" id="publishBtn" onclick="addProduct()">
             <i class="fa-solid fa-check-circle"></i> Publish Product
         </button>
 
@@ -602,9 +603,16 @@
         document.getElementById('searchBtn').addEventListener('click', applyFilters);
 
         // ==============================================
-        // 🆕 8. ADD PRODUCT FUNCTION (Using global variables)
+        // 📦 8. ADD PRODUCT FUNCTION (With Loading State & Auto Clear)
         // ==============================================
         window.addProduct = function() {
+            const btn = document.getElementById('publishBtn');
+            const originalText = btn.innerHTML;
+            
+            // Set Loading State
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...';
+            btn.disabled = true;
+
             const name = document.getElementById('pName').value.trim();
             const code = document.getElementById('pCode').value.trim();
             const price = document.getElementById('pPrice').value.trim();
@@ -623,10 +631,13 @@
 
             if(!name || !code || !price || !thumb || !affiliateLink) {
                 alert('Please fill Name, Code, Price, Upload Thumbnail, and Affiliate Link!');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
                 return;
             }
 
-            const imagesArray = [img1, img2, img3, img4].filter(url => url !== '');
+            // ✅ FIX: Properly filter images to ensure all 4 large images are captured
+            const imagesArray = [img1, img2, img3, img4].filter(url => url && url !== '');
             if (imagesArray.length === 0) {
                 imagesArray.push(thumb);
             }
@@ -654,40 +665,46 @@
 
             db.ref('products').push(newProduct)
                 .then(() => {
-                    alert('✅ Product Added Successfully! It is now live for everyone.');
-                    // Clear all inputs
-                    document.getElementById('pName').value = '';
-                    document.getElementById('pCode').value = '';
-                    document.getElementById('pPrice').value = '';
-                    document.getElementById('pSub').value = '';
-                    document.getElementById('pDesc').value = '';
-                    document.getElementById('pRating').value = '';
-                    document.getElementById('pReview').value = '';
-                    document.getElementById('pAffiliate').value = '';
-                    
-                    thumbData = ''; imgData1 = ''; imgData2 = ''; imgData3 = ''; imgData4 = '';
-                    
-                    const previews = document.querySelectorAll('.preview-img');
-                    previews.forEach(el => {
-                        el.style.display = 'none';
-                        el.src = '';
-                        const parentBox = el.parentElement;
-                        const icon = parentBox.querySelector('i');
-                        const span = parentBox.querySelector('span');
-                        if(icon) icon.style.display = 'flex';
-                        if(span) span.style.display = 'block';
-                    });
+                    btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Published!';
+                    setTimeout(() => {
+                        // Clear All Inputs and Reset UI
+                        document.getElementById('pName').value = '';
+                        document.getElementById('pCode').value = '';
+                        document.getElementById('pPrice').value = '';
+                        document.getElementById('pSub').value = '';
+                        document.getElementById('pDesc').value = '';
+                        document.getElementById('pRating').value = '';
+                        document.getElementById('pReview').value = '';
+                        document.getElementById('pAffiliate').value = '';
+                        
+                        thumbData = ''; imgData1 = ''; imgData2 = ''; imgData3 = ''; imgData4 = '';
+                        
+                        const previews = document.querySelectorAll('.preview-img');
+                        previews.forEach(el => {
+                            el.style.display = 'none';
+                            el.src = '';
+                            const parentBox = el.parentElement;
+                            const icon = parentBox.querySelector('i');
+                            const span = parentBox.querySelector('span');
+                            if(icon) icon.style.display = 'flex';
+                            if(span) span.style.display = 'block';
+                        });
 
-                    toggleAdminSidebar();
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        toggleAdminSidebar(); // Close the sidebar
+                    }, 1500);
                 })
                 .catch((error) => {
                     console.error('Error adding product:', error);
                     alert('❌ Error: ' + error.message);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
                 });
         };
 
         // ==============================================
-        // 🛒 9. CARD CLICK -> EXPANDED MODAL
+        // 🛒 9. CARD CLICK -> EXPANDED MODAL (FIXED SLIDER & CHECKOUT)
         // ==============================================
         container.addEventListener('click', function(e) {
             const card = e.target.closest('.item-card');
@@ -700,18 +717,23 @@
             document.getElementById('modalPrice').innerText = `₹${item.price}`;
             document.getElementById('modalDesc').innerText = (item.description || 'No description available.') + `\n\nCode: ${item.code}`;
             document.getElementById('modalFooterPrice').innerText = `₹${item.price}`;
-            document.getElementById('modalActionBtn').href = item.affiliateLink || '#';
+            
+            // ✅ FIX: Ensure Check Out button always has the correct link
+            const checkoutBtn = document.getElementById('modalActionBtn');
+            checkoutBtn.href = item.affiliateLink || '#';
+            checkoutBtn.style.display = 'inline-block'; // Ensure it's visible
 
             const track = document.getElementById('modalSliderTrack');
             const dotsContainer = document.getElementById('modalDotsContainer');
             track.innerHTML = '';
             dotsContainer.innerHTML = '';
             
-            // 🔥 FIX: Ensure images array is properly loaded and displayed
-            const images = item.images || [item.img || ''];
+            // ✅ FIX: Ensure all images are loaded properly from the array
+            const images = item.images && item.images.length > 0 ? item.images : [item.img || ''];
             images.forEach((imgUrl, index) => {
                 const slide = document.createElement('div'); slide.className = 'slide';
-                slide.innerHTML = `<img src="${imgUrl}" onerror="this.src='https://via.placeholder.com/600x600?text=Image'">`;
+                // Use onerror fallback
+                slide.innerHTML = `<img src="${imgUrl}" onerror="this.src='https://via.placeholder.com/600x600?text=Image+${index+1}'">`;
                 track.appendChild(slide);
             });
 
