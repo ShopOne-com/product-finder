@@ -174,7 +174,6 @@
         .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-gray); }
         .expanded-scrollable { flex: 1; overflow-y: auto; padding-bottom: 80px; background: var(--modal-bg); }
         .slider-main { width: 100%; aspect-ratio: 1 / 1; overflow: hidden; position: relative; background: #FFFFFF; cursor: grab; }
-        .slider-main:active { cursor: grabbing; }
         .slider-track { display: flex; height: 100%; transition: transform 0.3s ease-in-out; }
         .slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
         .slide img { width: 100%; height: 100%; object-fit: cover;}
@@ -738,17 +737,31 @@
         track.innerHTML = '';
         dotsContainer.innerHTML = '';
         
-        const images = item.images && item.images.length > 0 ? item.images : [item.thumbnail || item.img || ''];
+        // FIX: Include thumbnail as first slide, then all images
+        const images = [item.thumbnail, ...(item.images || [])].filter(Boolean);
+        // If no images, fallback to thumbnail or placeholder
+        if (images.length === 0) {
+            images.push(item.img || 'https://via.placeholder.com/600x600?text=No+Image');
+        }
+
         images.forEach((imgUrl, index) => {
             const slide = document.createElement('div'); slide.className = 'slide';
             slide.innerHTML = `<img src="${imgUrl}" loading="lazy" onerror="this.src='https://via.placeholder.com/600x600?text=Image+${index+1}'">`;
             track.appendChild(slide);
+
+            // Add dot
+            const dot = document.createElement('span');
+            dot.className = 'dot' + (index === 0 ? ' active' : '');
+            dot.addEventListener('click', () => { goToSlide(index); });
+            dotsContainer.appendChild(dot);
         });
 
         const revContainer = document.getElementById('modalReviewsContainer');
         revContainer.innerHTML = '';
         if(item.reviews && item.reviews.length > 0) {
-            [...item.reviews].reverse().forEach(rev => {
+            // FIX: Correctly reverse without syntax error
+            const reversedReviews = [...item.reviews].reverse();
+            reversedReviews.forEach(rev => {
                 const div = document.createElement('div'); div.className = 'review-item';
                 const initial = rev.name.charAt(0).toUpperCase();
                 div.innerHTML = `<div class="review-avatar">${initial}</div><div class="review-body"><div class="review-name">${rev.name} <span class="badge">About Product</span></div><p class="review-text">${rev.text}</p></div>`;
@@ -824,12 +837,20 @@
     }
 
     function nextSlide() {
+        if (totalSlides === 0) return;
         currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
         updateSlider();
     }
 
     function prevSlide() {
+        if (totalSlides === 0) return;
         currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+        updateSlider();
+    }
+
+    function goToSlide(index) {
+        if (index < 0 || index >= totalSlides) return;
+        currentSlideIndex = index;
         updateSlider();
     }
 
